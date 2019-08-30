@@ -1,9 +1,10 @@
 <template>
   <div>
-    <div>my</div>
+    <div>个人中心</div>
     <div>
       <van-button icon="star-o" type="primary" @click="personCreate">新建人物</van-button>
     </div>
+    <div>管理</div>
   </div>
 </template>
 

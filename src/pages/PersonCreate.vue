@@ -1,7 +1,6 @@
 <template>
   <div>
     新建
-    <van-button></van-button>
     <van-cell-group>
       <van-field
         v-model="username"
@@ -24,14 +23,8 @@
         arrow-direction="down"
         @click="openPickDay('death')"
       >{{deathday}}</van-cell>
+      <van-field v-model="message" label="生平" type="textarea" placeholder="请输入" rows="2" autosize />
 
-      <!-- <van-action-sheet
-        v-model="show"
-        :actions="actions"
-        cancel-text="取消"
-        @select="onSelect"
-        @cancel="onCancel"
-      />-->
       <van-popup v-model="show" position="bottom" :style="{ height: '40%' }">
         <van-datetime-picker
           v-model="currentDate"
@@ -39,9 +32,18 @@
           :min-date="minDate"
           :formatter="formatter"
           @confirm="pickedBirthday"
+          @cancel="cancelBirthday"
+          cancel-button-text="清除"
         />
       </van-popup>
     </van-cell-group>
+    <div>
+      头像
+      <van-uploader v-model="fileList" multiple :max-count="1" :after-read="avatar_upload" />
+    </div>
+    <div>
+      <van-button>保存</van-button>
+    </div>
   </div>
 </template>
 
@@ -49,6 +51,13 @@
 export default {
   data() {
     return {
+      fileList: [
+        // { url: "https://img.yzcdn.cn/vant/cat.jpeg" },
+        // Uploader 根据文件后缀来判断是否为图片文件
+        // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
+        // { url: "https://cloud-image", isImage: true }
+      ],
+      message: "",
       opendPickDay: "",
       birthday: "",
       deathday: "",
@@ -68,9 +77,17 @@ export default {
   },
 
   methods: {
+    avatar_upload(file) {
+      console.log(file);
+    },
     openPickDay(type) {
       this.show = true;
       this.opendPickDay = type;
+    },
+    cancelBirthday() {
+      if (this.opendPickDay == "birth") this.birthday = "";
+      else if (this.opendPickDay == "death") this.deathday = "";
+      this.show = false;
     },
     pickedBirthday(value) {
       console.log(value);

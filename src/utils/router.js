@@ -12,6 +12,18 @@ export default new Router({
       // component: () => import("./jianshu/login.vue")
     },
     {
+      name: "login",
+      path: "/login",
+      component: () =>
+        import(/* webpackChunkName: "login" */ "../pages/login.vue")
+    },
+    {
+      name: "signup",
+      path: "/signup",
+      component: () =>
+        import(/* webpackChunkName: "signup" */ "../pages/signup.vue")
+    },
+    {
       name: "home",
       path: "/home",
       component: () =>
@@ -33,7 +45,9 @@ export default new Router({
       name: "single",
       path: "/single/:id",
       component: () =>
-        import(/* webpackChunkName: "personlist" */ "../pages/singlePerson.vue")
+        import(
+          /* webpackChunkName: "singlePerson" */ "../pages/singlePerson.vue"
+        )
     },
 
     {
