@@ -1,31 +1,37 @@
 <template>
   <div class="hello">
-    <firstpage />
+    <!-- <navBarTop />
+    <singlePerson />-->
+    <div class="main_page">
+      <router-view />
+    </div>
+
     <van-tabbar v-model="active">
-  <van-tabbar-item name="home" icon="home-o">标签</van-tabbar-item>
-  <van-tabbar-item name="search" icon="search">标签</van-tabbar-item>
-  <van-tabbar-item name="friends" icon="friends-o">标签</van-tabbar-item>
-  <van-tabbar-item name="setting" icon="setting-o">标签</van-tabbar-item>
-</van-tabbar>
+      <van-tabbar-item name="home" icon="home-o" replace to="/home">首页</van-tabbar-item>
+      <van-tabbar-item name="list" icon="search" replace to="/list">收藏列表</van-tabbar-item>
+      <van-tabbar-item name="my" icon="friends-o" replace to="/my">我的</van-tabbar-item>
+    </van-tabbar>
   </div>
 </template>
 
 <script>
-import firstpage from './firstpage'
+// import navBarTop from "./navBarTop";
+// import singlePerson from "../pages/singlePerson";
 export default {
-  name: 'HelloWorld',
+  name: "HelloWorld",
   props: {
     msg: String
   },
-  components:{
-firstpage
+  components: {
+    // singlePerson,
+    // navBarTop
   },
   data() {
     return {
-      active: 'home'
-    }
+      active: "home"
+    };
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -43,5 +49,11 @@ li {
 }
 a {
   color: #42b983;
+}
+.main_page {
+  padding-bottom: 50px;
+  /* margin-bottom: -50px;
+  overflow: hidden;
+  height: 400px; */
 }
 </style>
