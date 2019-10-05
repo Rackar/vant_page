@@ -4,8 +4,7 @@ import Router from "vue-router";
 Vue.use(Router);
 
 export default new Router({
-  routes: [
-    {
+  routes: [{
       path: "/",
       redirect: "/list"
       // name: "login",
@@ -15,38 +14,40 @@ export default new Router({
       name: "login",
       path: "/login",
       component: () =>
-        import(/* webpackChunkName: "login" */ "../pages/login.vue")
+        import( /* webpackChunkName: "login" */ "../pages/login.vue")
     },
     {
       name: "signup",
       path: "/signup",
       component: () =>
-        import(/* webpackChunkName: "signup" */ "../pages/signup.vue")
+        import( /* webpackChunkName: "signup" */ "../pages/signup.vue")
     },
     {
       name: "home",
       path: "/home",
       component: () =>
-        import(/* webpackChunkName: "home" */ "../pages/home.vue")
+        import( /* webpackChunkName: "home" */ "../pages/home.vue")
     },
     {
       name: "my",
       path: "/my",
-      component: () => import(/* webpackChunkName: "my" */ "../pages/my.vue")
+      component: () => import( /* webpackChunkName: "my" */ "../pages/my.vue")
     },
     {
       name: "list",
       path: "/list",
       component: () =>
-        import(/* webpackChunkName: "personlist" */ "../pages/personlist.vue")
+        import( /* webpackChunkName: "personlist" */ "../pages/personlist.vue")
     },
 
     {
       name: "single",
       path: "/single/:id",
+      props: true,
       component: () =>
         import(
-          /* webpackChunkName: "singlePerson" */ "../pages/singlePerson.vue"
+          /* webpackChunkName: "singlePerson" */
+          "../pages/singlePerson.vue"
         )
     },
 
@@ -55,7 +56,18 @@ export default new Router({
       path: "/personCreate",
       component: () =>
         import(
-          /* webpackChunkName: "personCreate" */ "../pages/PersonCreate.vue"
+          /* webpackChunkName: "personCreate" */
+          "../pages/PersonCreate.vue"
+        )
+    },
+    {
+      name: "article",
+      path: "/article/:id",
+      props: true,
+      component: () =>
+        import(
+          /* webpackChunkName: "singlePerson" */
+          "../pages/articleShow.vue"
         )
     }
   ]

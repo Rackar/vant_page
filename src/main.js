@@ -5,10 +5,18 @@ import store from "./utils/store";
 
 import Vant from "vant";
 import "vant/lib/index.css";
-
+import {
+  Lazyload
+} from 'vant';
+let lazyOption = {
+  loading: '/img/loading.jpg',
+  error: '/img/loading.jpg'
+}
 Vue.use(Vant);
+// Vue.use(Lazyload, lazyOption);
+Vue.use(Lazyload);
 import axios from "axios";
-axios.defaults.baseURL = "http://localhost:3000/";
+axios.defaults.baseURL = "http://localhost:3002/";
 // var token = window.localStorage.getItem("token");
 //请求拦截。所有http请求增加token
 axios.interceptors.request.use(
@@ -27,7 +35,7 @@ axios.interceptors.request.use(
   }
 );
 axios.interceptors.response.use(
-  function(response) {
+  function (response) {
     // 用户信息是否超时，重定向到登录页面
     // debugger;
     if (response.data.status === 0) {
@@ -42,7 +50,7 @@ axios.interceptors.response.use(
     }
     return response;
   },
-  function(error) {
+  function (error) {
     // Do something with response error
     return Promise.reject(error);
   }

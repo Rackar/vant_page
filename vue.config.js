@@ -9,7 +9,7 @@ module.exports = {
   devServer: {
     // publicPath: "/", // 和 publicPath 保持一致,
     port: 9433,
-    proxy: "http://localhost:3000"
+    proxy: "http://localhost:3002"
     // {
 
     // "/api": {
@@ -38,8 +38,7 @@ module.exports = {
           minRatio: 0.8
         })
       );
-    } else {
-    }
+    } else {}
   },
   chainWebpack: config => {
     // config.module
