@@ -24,13 +24,17 @@
       />
     </div>
     <div @click="showPic">相册图标</div>
-    <van-image-preview v-model="show" :lazy-load="true" :images="images" @change="onChange">
+    <van-image-preview
+      v-model="show"
+      :start-position="index"
+      :lazy-load="true"
+      :images="images"
+      @change="onChange"
+    >
       <template v-slot:index>
-        第{{ index }}页
-        <span class="bottom slot">我的要命</span>
-      </template>
-      <template v-slot:default>
-        <p>看看有没有默认</p>
+        <div>第{{ index }}页</div>
+        <div>名称</div>
+        <span class="bottom slot">{{imageInfo}}</span>
       </template>
     </van-image-preview>
   </div>
@@ -53,8 +57,16 @@ export default {
         "https://img.yzcdn.cn/vant/apple-1.jpg",
         "https://img.yzcdn.cn/vant/apple-2.jpg"
       ],
+      imageInfo: "",
       show: false,
-      index: 0
+      index: 0,
+      ImageList: [
+        {
+          url: "0",
+          name: "0",
+          info: "0"
+        }
+      ]
     };
   },
   props: {
@@ -70,6 +82,8 @@ export default {
   },
   created() {
     this.fetchSinglePerson(this.id);
+    this.getImagesList(this.id);
+    this.getArticlesList(this.id);
   },
   methods: {
     fetchSinglePerson(id = 0) {
@@ -82,18 +96,30 @@ export default {
       };
       this.articles = this.articles;
     },
+    getImagesList(id) {
+      var ImageList = [
+        {
+          url: "https://img.yzcdn.cn/vant/apple-1.jpg",
+          name: "1.jpg",
+          info: "第一个图的的的大多数疯狂夺金爱丽丝的房间爱丽丝的房间介绍1"
+        },
+        {
+          url: "https://img.yzcdn.cn/vant/apple-2.jpg",
+          name: "2.jpg",
+          info: "介绍2"
+        }
+      ];
+      this.ImageList = ImageList;
+      this.images = ImageList.map(data => data.url);
+      this.onChange(0);
+    },
+    getArticlesList(id) {},
     showPic() {
       this.show = true;
-      // ImagePreview({
-      //   images: ["https://img.yzcdn.cn/1.jpg", "https://img.yzcdn.cn/2.jpg"],
-      //   startPosition: 0,
-      //   onClose() {
-      //     // do something
-      //   }
-      // });
     },
     onChange(index) {
       this.index = index;
+      this.imageInfo = this.ImageList[index].info;
     }
   }
 };
