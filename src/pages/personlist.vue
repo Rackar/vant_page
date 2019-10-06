@@ -43,7 +43,7 @@
 let singleStuc = {
   name: "姓名",
   avatar: "",
-  id: "3"
+  id: "5d9a1eb2539da63860763ad4"
 };
 export default {
   data() {

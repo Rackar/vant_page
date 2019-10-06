@@ -1,7 +1,7 @@
 <template>
   <div>
     <van-nav-bar
-      :title="'记得'+id"
+      :title="'记得'"
       left-text="返回"
       right-text="保存"
       left-arrow
@@ -38,8 +38,18 @@ export default {
       this.$router.back();
     },
     saveArticle() {
-      this.$toast("保存成功");
-      this.$router.back();
+      var obj = {
+        personid: this.id,
+        createrid: "5",
+        title: this.title,
+        text: this.text
+      };
+      this.$axios.post("/person/article", obj).then(res => {
+        console.log(res);
+        this.$toast("保存成功");
+
+        this.$router.back();
+      });
     }
   }
 };

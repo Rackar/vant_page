@@ -13,8 +13,9 @@
     <div>
       <van-image round width="10rem" height="10rem" src="https://img.yzcdn.cn/vant/cat.jpeg" />
     </div>
-    <div>{{userinfo.name}}</div>
-    <div>{{userinfo.birth}}-{{userinfo.death}}</div>
+    <div></div>
+    <h3>{{userinfo.name}}</h3>
+    <div class="year">{{userinfo.birthday}} -- {{userinfo.deathday}}</div>
     <div class="info">{{userinfo.info}}</div>
     <!-- <div>
       <van-button round type="primary">文章</van-button>
@@ -24,6 +25,7 @@
       <van-button round type="primary">投诉</van-button>
     </div>-->
     <div>
+      <span v-show="articles.length==0" @click="onSelect({option:'article'})">尚未添加文章</span>
       <van-cell
         v-for="item in articles"
         :key="item.id"
@@ -66,7 +68,7 @@ export default {
         { title: "在高考的那一年里", id: "2", value: "老大" },
         { title: "在高考的那一年里2", id: "3", value: "老2" }
       ],
-      userinfo: { name: "", birth: 0, death: 0, info: "" },
+      userinfo: { name: "", birthday: 0, deathday: 0, info: "" },
       images: [
         "https://img.yzcdn.cn/vant/apple-1.jpg",
         "https://img.yzcdn.cn/vant/apple-2.jpg"
@@ -111,11 +113,21 @@ export default {
       console.log(id);
       this.userinfo = {
         name: "毛18",
-        birth: 2018,
-        death: 2019,
+        birthday: 2018,
+        deathday: 2019,
         info: "阿斯顿发的说asdfasdf sadf法fsaasdfsad发送到发斯蒂芬df是对方"
       };
-      this.articles = this.articles;
+      id = this.id;
+      this.$axios
+        .get("/person/" + id)
+        .then(res => {
+          console.log(res);
+          this.userinfo = res.data.data;
+          this.articles = this.userinfo.articles;
+        })
+        .catch(err => {
+          this.$toast("获取数据错误" + err);
+        });
     },
     getImagesList(id) {
       var ImageList = [
@@ -152,9 +164,9 @@ export default {
     onSelect(item) {
       // 点击选项时默认不会关闭菜单，可以手动关闭
       this.actionShow = false;
-      this.$toast(item.name);
+      // this.$toast(item.name);
       if (item.option == "article") {
-        this.$router.push("/articleCreate/" + "uid1");
+        this.$router.push("/articleCreate/" + this.id);
       } else if (item.option == "photo") {
       } else if (item.option == "edit") {
       } else if (item.option == "call") {
@@ -166,8 +178,14 @@ export default {
 
 <style >
 .single div.info {
+  margin: 5px 25px;
   height: 100px;
-  color: #fc9898;
+  color: #3b3b3b;
+  text-align: left;
+}
+.single .year {
+  font-size: 12px;
+  color: grey;
 }
 .swipeImg {
   width: 30px;
@@ -184,7 +202,7 @@ export default {
   -moz-box-shadow: 4px 4px 2px #6b6b6b;
   -webkit-box-shadow: 4px 4px 2px #6b6b6b;
   box-shadow: 4px 4px 2px #6b6b6b;
-  position: absolute;
+  position: fixed;
   bottom: 65px;
   right: 15px;
 }

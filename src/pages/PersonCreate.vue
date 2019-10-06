@@ -3,7 +3,7 @@
     <h3>新建人物</h3>
     <van-cell-group>
       <van-field
-        v-model="username"
+        v-model="name"
         required
         clearable
         label="姓名"
@@ -17,7 +17,7 @@
         <van-button slot="button" @click="openPickDay('death')" size="small" type="primary">日期选择</van-button>
       </van-field>
 
-      <van-field v-model="message" label="生平" type="textarea" placeholder="请输入" rows="5" autosize />
+      <van-field v-model="info" label="生平" type="textarea" placeholder="请输入" rows="5" autosize />
 
       <van-popup v-model="show" position="bottom" :style="{ height: '40%' }">
         <van-datetime-picker
@@ -51,22 +51,16 @@ export default {
         // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
         // { url: "https://cloud-image", isImage: true }
       ],
-      message: "",
+      info: "",
       opendPickDay: "",
       birthday: "",
       deathday: "",
-      minHour: 10,
-      maxHour: 20,
+
       minDate: new Date(1900, 1, 1),
       maxDate: new Date(2025, 10, 1),
-      username: "",
+      name: "",
       currentDate: new Date(),
-      show: false,
-      actions: [
-        { name: "选项" },
-        { name: "选项" },
-        { name: "选项", subname: "描述信息" }
-      ]
+      show: false
     };
   },
 
@@ -103,7 +97,17 @@ export default {
       return value;
     },
 
-    savePerson() {}
+    savePerson() {
+      let person = {
+        name: this.name,
+        birthday: this.birthday,
+        deathday: this.deathday,
+        info: this.info
+      };
+      this.$axios.post("/person", person).then(res => {
+        console.log(res);
+      });
+    }
   }
 };
 </script>
