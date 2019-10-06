@@ -66,8 +66,18 @@ export default new Router({
       props: true,
       component: () =>
         import(
-          /* webpackChunkName: "singlePerson" */
+          /* webpackChunkName: "articleShow" */
           "../pages/articleShow.vue"
+        )
+    },
+    {
+      name: "articleCreate",
+      path: "/articleCreate/:id",
+      props: true,
+      component: () =>
+        import(
+          /* webpackChunkName: "articleCreate" */
+          "../pages/articleCreate.vue"
         )
     }
   ]

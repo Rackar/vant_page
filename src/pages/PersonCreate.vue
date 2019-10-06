@@ -1,6 +1,6 @@
 <template>
   <div>
-    新建
+    <h3>新建人物</h3>
     <van-cell-group>
       <van-field
         v-model="username"
@@ -10,20 +10,14 @@
         placeholder="请输入姓名"
         @click-right-icon="$toast('question')"
       />
-      <van-cell
-        title="出生年月"
-        is-link
-        arrow-direction="down"
-        @click="openPickDay('birth')"
-      >{{birthday}}</van-cell>
+      <van-field v-model="birthday" center clearable label="出生年月" placeholder="输入格式：1950-05">
+        <van-button slot="button" @click="openPickDay('birth')" size="small" type="primary">日期选择</van-button>
+      </van-field>
+      <van-field v-model="deathday" center clearable label="去世年月" placeholder="健在请留空">
+        <van-button slot="button" @click="openPickDay('death')" size="small" type="primary">日期选择</van-button>
+      </van-field>
 
-      <van-cell
-        title="得到年月"
-        is-link
-        arrow-direction="down"
-        @click="openPickDay('death')"
-      >{{deathday}}</van-cell>
-      <van-field v-model="message" label="生平" type="textarea" placeholder="请输入" rows="2" autosize />
+      <van-field v-model="message" label="生平" type="textarea" placeholder="请输入" rows="5" autosize />
 
       <van-popup v-model="show" position="bottom" :style="{ height: '40%' }">
         <van-datetime-picker
@@ -38,11 +32,11 @@
       </van-popup>
     </van-cell-group>
     <div>
-      头像
+      <div>上传相片:</div>
       <van-uploader v-model="fileList" multiple :max-count="1" :after-read="avatar_upload" />
     </div>
     <div>
-      <van-button>保存</van-button>
+      <van-button @click="savePerson">保存</van-button>
     </div>
   </div>
 </template>
@@ -108,16 +102,8 @@ export default {
       }
       return value;
     },
-    onSelect(item) {
-      // 点击选项时默认不会关闭菜单，可以手动关闭
-      this.show = false;
-      Toast(item.name);
-    },
-    onCancel(item) {
-      // 点击选项时默认不会关闭菜单，可以手动关闭
-      this.show = false;
-      Toast(item.name);
-    }
+
+    savePerson() {}
   }
 };
 </script>

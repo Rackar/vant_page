@@ -1,6 +1,15 @@
 <template>
   <div class="single">
-    <navBarTop />
+    <van-nav-bar
+      title="人物"
+      left-text="返回"
+      right-text="操作"
+      left-arrow
+      @click-left="onClickLeft"
+      @click-right="onClickRight"
+    />
+
+    <van-action-sheet v-model="actionShow" :actions="actions" @select="onSelect" />
     <div>
       <van-image round width="10rem" height="10rem" src="https://img.yzcdn.cn/vant/cat.jpeg" />
     </div>
@@ -23,7 +32,15 @@
         :value="item.value"
       />
     </div>
-    <div @click="showPic">相册图标</div>
+
+    <van-image
+      @click="showPic"
+      class="xiangce"
+      width="45"
+      radius="8"
+      height="45"
+      src="/img/xiangce.png"
+    />
     <van-image-preview
       v-model="show"
       :start-position="index"
@@ -41,11 +58,8 @@
 </template>
 
 <script>
-import navBarTop from "../components/navBarTop";
 export default {
-  components: {
-    navBarTop
-  },
+  components: {},
   data() {
     return {
       articles: [
@@ -66,6 +80,13 @@ export default {
           name: "0",
           info: "0"
         }
+      ],
+      actionShow: false,
+      actions: [
+        { name: "添加文章", option: "article" },
+        { name: "增加照片", option: "photo" },
+        { name: "编辑资料", option: "edit" },
+        { name: "反馈", option: "call" }
       ]
     };
   },
@@ -120,6 +141,24 @@ export default {
     onChange(index) {
       this.index = index;
       this.imageInfo = this.ImageList[index].info;
+    },
+    onClickLeft() {
+      // this.$toast("返回");
+      this.$router.back();
+    },
+    onClickRight() {
+      this.actionShow = true;
+    },
+    onSelect(item) {
+      // 点击选项时默认不会关闭菜单，可以手动关闭
+      this.actionShow = false;
+      this.$toast(item.name);
+      if (item.option == "article") {
+        this.$router.push("/articleCreate/" + "uid1");
+      } else if (item.option == "photo") {
+      } else if (item.option == "edit") {
+      } else if (item.option == "call") {
+      }
     }
   }
 };
@@ -140,5 +179,13 @@ export default {
   top: 0px;
   left: -80px;
   margin-top: 90vh;
+}
+.xiangce {
+  -moz-box-shadow: 4px 4px 2px #6b6b6b;
+  -webkit-box-shadow: 4px 4px 2px #6b6b6b;
+  box-shadow: 4px 4px 2px #6b6b6b;
+  position: absolute;
+  bottom: 65px;
+  right: 15px;
 }
 </style>
