@@ -1,84 +1,91 @@
-import Vue from "vue";
-import Router from "vue-router";
+import Vue from 'vue'
+import Router from 'vue-router'
 
-Vue.use(Router);
+Vue.use(Router)
 
 export default new Router({
-  routes: [{
-      path: "/",
-      redirect: "/list"
+  routes: [
+    {
+      path: '/',
+      redirect: '/list'
       // name: "login",
       // component: () => import("./jianshu/login.vue")
     },
     {
-      name: "login",
-      path: "/login",
+      name: 'login',
+      path: '/login',
       component: () =>
-        import( /* webpackChunkName: "login" */ "../pages/login.vue")
+        import(/* webpackChunkName: "login" */ '../pages/login.vue')
     },
     {
-      name: "signup",
-      path: "/signup",
+      name: 'signup',
+      path: '/signup',
       component: () =>
-        import( /* webpackChunkName: "signup" */ "../pages/signup.vue")
+        import(/* webpackChunkName: "signup" */ '../pages/signup.vue')
     },
     {
-      name: "home",
-      path: "/home",
+      name: 'home',
+      path: '/home',
       component: () =>
-        import( /* webpackChunkName: "home" */ "../pages/home.vue")
+        import(/* webpackChunkName: "home" */ '../pages/home.vue')
     },
     {
-      name: "my",
-      path: "/my",
-      component: () => import( /* webpackChunkName: "my" */ "../pages/my.vue")
+      name: 'my',
+      path: '/my',
+      component: () => import(/* webpackChunkName: "my" */ '../pages/my.vue')
     },
     {
-      name: "list",
-      path: "/list",
+      name: 'list',
+      path: '/list',
       component: () =>
-        import( /* webpackChunkName: "personlist" */ "../pages/personlist.vue")
+        import(/* webpackChunkName: "personlist" */ '../pages/personlist.vue')
     },
 
     {
-      name: "single",
-      path: "/single/:id",
+      name: 'single',
+      path: '/single/:id',
       props: true,
       component: () =>
         import(
           /* webpackChunkName: "singlePerson" */
-          "../pages/singlePerson.vue"
+          '../pages/singlePerson.vue'
         )
     },
 
     {
-      name: "personCreate",
-      path: "/personCreate",
+      name: 'personCreate',
+      path: '/personCreate',
       component: () =>
         import(
           /* webpackChunkName: "personCreate" */
-          "../pages/PersonCreate.vue"
+          '../pages/PersonCreate.vue'
         )
     },
     {
-      name: "article",
-      path: "/article/:id",
+      name: 'article',
+      path: '/article/:id',
       props: true,
       component: () =>
         import(
           /* webpackChunkName: "articleShow" */
-          "../pages/articleShow.vue"
+          '../pages/articleShow.vue'
         )
     },
     {
-      name: "articleCreate",
-      path: "/articleCreate/:id",
+      name: 'articleCreate',
+      path: '/articleCreate/:id',
       props: true,
       component: () =>
         import(
           /* webpackChunkName: "articleCreate" */
-          "../pages/articleCreate.vue"
+          '../pages/articleCreate.vue'
         )
+    },
+    {
+      name: 'word',
+      path: '/word',
+      component: () =>
+        import(/* webpackChunkName: "login" */ '../pages/word.vue')
     }
   ]
-});
+})
