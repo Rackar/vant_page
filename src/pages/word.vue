@@ -16,8 +16,10 @@
     <div>已认识 ： {{rightCount}}个字， 不认识： {{wrongCount}}个字</div>
     <div>当前认识率 ： {{rightRate}}</div>
     <div>当前进度 ： 第{{finishCount}}字 / 总{{words.length}}字</div>
+    <!-- {{test}} ,{{is_weixin()}} -->
     <div>
-      <van-button type="warning" size="small" style="margin-right:20px;" @click="backWord()">返回前一个修改</van-button>
+      <van-button type="warning" size="small" style="margin-right:20px;" @click="backWord()">返回</van-button>
+      <van-button type="warning" size="small" style="margin-right:20px;" @click="clear()">清空</van-button>
       <van-button type="warning" size="small" @click="showOption=!showOption" v-show="false">选项</van-button>
       <div v-show="showOption">
         <van-field v-model="skipNum" label="跳过前多少字" placeholder="请输入数字">
@@ -28,12 +30,28 @@
         <div>显示错字集</div>
       </div>
     </div>
+    <div v-show="showPay" class="payment">
+      <h3>测字软件好用吗？欢迎鼓励开发者</h3>
+      <div style="margin:10px 0 14px;">
+        <img src="/img/pay.jpg" alt width="300px" />
+      </div>
 
+      <div style="margin-top:160px;">
+        <van-button type="danger" size="normal" @click="quitPay()">继续测试</van-button>
+      </div>
+      <!-- <div style="margin-top:20px;">
+        <van-button type="default" size="small" @click="isPayed=true">赞赏完成</van-button>
+      </div>-->
+    </div>
     <!-- {{doneWords}} -->
   </div>
 </template>
 
 <script>
+//设置cookie
+
+//取回cookie
+
 // var arr = "乙一二地用同所现是为";
 // var arr =
 // "的到主三产新一地用同所现是为那成起如了以道活把么不子学太进力在小工事前等有就多面着电人时去民没开上全发日而五这可作家样心大下自方部只我要好后长实国十过都又社来生动于问水们会对之法外和也行分从政个出里经本很他年能种定高中得二还见月说你天看两业当度什回象打义物儿情口论些想公几七门加体做最先东老此九八常女著知相级题放四关气位入期头制命结给真因然西性己数向其话代队展理表将教战资点重内次果通合化与路完农明应由党反名无各利六白解机但今便建叫意者手原革提使间平军立或第百量总少山正比员走文线条耍改务科更别美吃流难斗万再书治深收系听马领保信已才组联住究变运界金统且形必议记管怎它安车任处近边取并受认非阶被海极志料报南育基图何官接思质则呢决华设指研热她干件帮劳术及区光目每夫争身强市场眼声济品快带交北共直千亲布求计许导至石世特造花根达步器林王拿示拉办际校服积众群举该节亚省观即未精复风算死席树厂据调专约传越奸母局照备支增土类易钱婚程较空神技历火请单克讲兵团元权号告胜字爱毛京德选却持师转参整油清商须斯铁米广孩半具势委张装习织笑色连批青集院式压府早病板切觉找规友球望识往验谈河吗士紧族虽江除感食苦音站准般列引试村况呀失始包曾影低候哥洋黑倒确周跟怕段若晚破念似随格害推故养费断细温助满黄甚标英容防父速兴喜需红续言房片落修乐采游苏草田块哪消首项妇买离够价功银衣县坐双送城型写足赛巴职状台史证船止视古飞木罢希愿远注角鱼查投司屋急继显财欢阳弟固旧免效律答渐啦旅响妈严医谁错刻派轮良尺姐存啊孔初云归尽护击刀副令跑施款星男余坚富息按致读差像扬坏适创滑留叶帝协置武让轻负靠益纪敌朝待艺穿围吧率姑脚端阿供责夜换抗层皮营属配独划维雨密宽某企值监简迫判客既忙排洲闻底例称均久敢午考汽依演慢冷仍药短室血材恩货察背激春烟救芬饭毫守构另优借担虫乡获杂顶桥仅酒微波肯讨态付伤居乱凭圆画奇爷班印岁座减限诸钟预君策呼床鲜宣逐句停乎掉略卖赶互善零源卫承章环童素跳州纸您怪矿绝终封困戏充朋娘央吸述刚降案脸假汉语李诉普齐尼左占右瓶福含散灯植痛馆松杀兰粉唱险掌恶沙酸玩妹架斤针削肥移静肉罗丝超弹曲肆旁误菜景粮牛替野攻顾束模脑礼鼓课赞液输巷退惊犯罪烈冲藏播忽评练测谢挥编检境麦哈熟异范努露暗票翻睛径否缺夺促亦升登户培套茶钢危迎棉脱香哭搞堂夏鼠访突歌训灭祖射恐亮陈抓尚烧贵欧敬味尤嘴核宗盘凤临础补纳弱爸启伟孙甲街咱盛骨遇盖损蒙操潮兄胡耳混羊载辨倍控麻雄威弄稳狗昨销阵讯届晓雷伸闹丰附铜份鸟园顺庭末索奶磨宝泥镜店塞玉庄镇楼探额鸡永贫败舞吹侵毒岛航摇幕竟托毕寻横途概睡洗湖凡陆抵枝笔恼岸筑季洞煤介莫齿执录亿宁龙扩冬港卡招沿括缘秋妻健亩鲁阻召怀卷醒勇阴绩喝胞伯暴拜敞荣刺遍雪猪触篇忘抽恨旗休订炉杆械绿瓦巨逃亡惯氏征贸缩盾寸私疑顿偏唯津冰残版隔枪绍聪析剂聚杯佛谋透瞧窗姓墙穷欲挂庆谷粒献壁摆寨硬染沉狠楚追灵井抢剧税序晨乙灰牙厚喊袋薄践幸抱软皆奖奋苗握闭圈奴警氧虎刘域乃迅振粗浪瓜纷汗秩禁援杨尖映寒遣怒壮缓猫净尾堆俗圣彩博菌避彼遗蛋泪废怜督祝牌拆裁纯耐迷盐诗燃智勒洪距矛伙丽赵库桌裂愈雕剥惜股湿丹铺虚炮吨尊瞒驻钻择皇延徒拖乘竹奏彻拍康繁忍辛幼捉典勤览伐番汇妙殖渡涉劝牧岩贝辆箱糠珠浅贯柱网洁稿抬脉碎盟稻灾坦兔池旋鞋巧祥婆售川螺乌爆唤腿塔奔鬼厅垂妄耕贡释碗愁稍柴宜寄滚喷奥审擦仪授炼辈辞暖慌玻糊辟插趣悟奉涂斜债润甘捕叹叔湾侧壤乏丁宪震冒诚扎壳腐纵猛淡墨泰幅呆迹冠词鸣挑株骂沈夹予锦宫旱梦摄倾劲遭豆荷仙贺璃签帽页艰舍腰允爬丈秘虑浓扫迟伍泻秀乒累饮懂倘朗阀吉臣骗胆摸截森吴貌衡励符荒扇潜纺仿狂邻亏浮沟戴疾泛拔赏悲盆毁蜂珍锋纤妥购闪黎晶扶融邀灌胶拥撤辉肃疗绕殊揭邮饰隶仁唐泽梁恢竞偷赤渔哲骤耗伏宾孤纱贼卵仔默呈宋顽辩暂刑巩炭扑剩荡币申唉磁厘欺鼻狐仗袖割违污姻盗肚添棒泼漏挖耀颜患祸恰碰纹障贴刊胸朱牲栽柳嫂饿朵瑞龄颗弃炸郎冻鉴忠兼岂闯昼钢蒸蓄臂凝艇紫挤趁宿誉趋闷覆腾饲饱驾役乳塑喂弯昌阅匪徐凉袭斑燕租帖豪腹箭坡吐雅倡秤俱咬帐尘籍遵寿刷搬鹊丢叙汤拾旨芽舒窝跃肩碍陷摩脂偶缝欠蝇侮阁烦储详筒忧跌孟踏瞎饼眉拆绪峰阔稀猴拒牵绳搭畜尝键牢烂钉焦凶秒兽仰铃锅掘疮棋桑葡歇瘦蚕叛谅佩抛匹鸦翁隐剑昏蛇症辽妨仇羽扣苍橡悄享滋撞轨浙忆犹梅乞伴舌耻悬庙猜隆贷泉蜜铸骑赖雀汪卧拔敏惠晴蚊槽戎矮陪椅慰缸蓝巡返勉递逼码杜惨涨滴嫁剪埋轰俩屈劣敲锻屡琴吓罚闲郑伪吊扰丧译昆勿册篮漠岭狼膜棍筹柔挺桃贪弦悉宴驱肝捐鸭舅愤丙迈扯浸恭肤锁泡厉陶爹愚狡厌仆描愧循拳浆慈胀辱链脏骄冤偿旬隙谊甜穴掩旦粘眠惑嚷鹿匠赔宇竭吞腊摘飘墓抚嫩醉吵捧梯凯杰翼匀蓬芳迁携柄壶哀崇谨桂丑笼孝涌估糕催遮漆衰绵柜丛饥穗蚀逢慕昂筋乔疆栏怨薪巾侨岗秧浇浑傅辅塘赴柏纠拼躲疯恋悔棵宅渠铅慎贤跨咐舰赠畅询颈尸扭狮驶汁溜睁御鄙嘱弊漂咳溪驴贞砖梳萄蜡卜羞枯慧晒填竿踢矩躺酬虾厨捷殿茎肠胁绸绘桶吩腔爪蚁蔬坑疏钞霸锐煮傲盼龟牺洒廉辰舟惭串弓挡顷淋熊餐燥鹰膀郊劫臭婶滤峡欣戚雾狱旺轧恳猎绣暑葛熔堪鹅络姨烛滩杉霉漫佳刮魂誓挽妖炎赌撒裳仓堡颂锡逆罐晋酱僚董茫稼仍饶怠档疲拌驰裕躬诱砍贱抖姿宏泊绒膨粪剖颠侦渗狭驼歪蚂葬胃押棚勾垫朴蹲惰爽歼摊垦纽肿谱卸秆券盈盲枣脾袍疫址摔嫌滨惹恒痕佣摇翅披碧糟霞竖疼泳骆匆碑肺毅蝶浩溉芦侍搁缠堵搜催挨陵娃脆拘钓菊冶抹鞠轿脊狸贩叨概宙痰犬蛙棕丘诊堤陕皱斥酷叮艘框霜鸽凳踪扮掠谦缎拦辣伞羡叉寺杠挪榜赚肢泄畏惩茂凑撑夸咽渴犁亭盒蔽衬窃渣诞锤葱惧舱嘉喘娇炕缴捏膏刃坝筛屑焰茅唇捞兆颤赢孕幻懒垄掏薯梨苹驳坛厦冈傻沃锈逮蝴衔锯肌罩跪搅悠姜鞭遥毙俊拣铲窄怖烘叠逝屠裤尿掀屿愉哗抄晃攀帅拢洽夕莲扁沸哄枕钩窑哨挣帘涛翠沾胳崖蒜脖闸炒裹蕉滔伶傍胖塌僵橘斧谎绑捆撕浴踩禽晌袜袄蠢膊囊帜喉桨廊屯帆悦魔俯惕搏砌茧揉咸陡蹄乓榴锄荐裙肾艳酿蹈杏哑芝沫淘膝盏宰韵芒醋趟坟淹耽蔑皂钳萌喇匙萝悼嗓蛾倚劈庸垒灿梢粱挠朽俭灶毯垮涝鸣邪倦盯拐躁蛮烛馅扛忌俘絮桐骡坊瓣吼滥萍烤禾逗碌辫煌笨揪柿尔圾熄嗽辜趴昵筐锣澡厕榆侯膛眨榨殃镰兜猾樱雁茄删轴绞丸椒撇捡伊笛蛛炊聋剃谓旷贿娱暮咏乾嚼歉谜岔蜓哩扒腥栗槐疤萨乖拴啄痒蜻措秃钥寇虹挎溶垃筝稠捎箩爵糖崭讽勺锹犀诵晕笋睬菠邦甩烫馒葵饺俄窜眯侄栋叼埃粥蜘魄蹦芹彪斩虏宵绢姥柬僻雹煎搂馋琳频嗡曼铝凸钙砂袁莱蝙韩褐迂磷艾锥氨哼硫秦譬弧抑辐伦滞氯仲契杭廷娶拟瓷贮勘赫媳寂敦甫淀综哎儒凌昭衷函姆隅蟹卓蒂宦雇勃舶梧徽呵贾戈祈谬俺诺澳吏缚磅菩碳颇吁凛魏涕洛胎啥怔钠癌泵碱翔铣霍勋署枚渤履谴敷焊卢赐硅芯刨菲氢阐匈氮兢咧奈邓郭蒋钦姊辑穆卑帕坯鹏丐衍崩锌晰拱曹熙棘冯捣纬棱栈觅寡奠椿巢彭粤斋祭颁掷蜗涡涤弥哟歧稟卿婿挫媒凹逸衙浦怯讼淮凿靖玛吟猿拓潘腺谐拧吱醇蝗舆萧婴账裸鸿罕刹叭酵咨瞪逻溃吻暇籽绅辖嘿篷晤珊苇枢孵疟诡姚藤诬馏玫肖捂吕趾坎栓钾豫瘤幽雌颖粹聘驮缔岳玄蒲屏郁赋庞桩硝氛湘锭胚屁泣鼎迄咕忿沪诈甸蛉杉骚颊簇兑嵌淑昧惶缆饵镀坠潭遂墩稚雏栖昔虐瞬鹤枉焕礁嗅蔗凄稽糙梗鲸噪痴咒蝉畔鞍韧椭瑰僧梭尉篡逊沥邢懈撮肪豺喧嚣讥恍寓檐彰闺乍喻啼溢庇螟厢耿殷扳泌嘲豁仑憾逛砸镶澄鹉耸蝶搀葫囚眷峻沼灼汛矢椎恕踱茬筷栅荆焚鳄萎苟蔓汰玲棺鳞铭聊缅拙蕴溅伺囱娜琼窖歹寝翘朦谭夷篱捶揩羔磕瞻闽秉椰酌剿蕾汹箍碘圃耙苔媚氓钧黍汞魁隧磺咖蟆靴渊畦壕蓉呕鲤锰硕廓寞巍藻钝妆蹬熬畸蚜熏芭祷蛹擅洼翰蚌佑赎柑枫楞埝骇阎钮煞宛腕躯橱畴褂矫揖鳍膳彬懊菱堕淫驯缕烹啡薛毡遮屉杖薄聂竣窟砚赦捍哺舵瑟楔睦蔫亥眶隘腻";
@@ -47,26 +65,49 @@ export default {
       words: ["人", "天", "地"],
       doneWords: [],
       skipNum: 0,
-      showOption: false
+      showOption: false,
+      showPay: false,
+      isPayed: false,
+      test: "",
+      time_ad_show: null
     };
   },
   mounted() {
-    window.addEventListener("beforeunload", e => this.beforeunloadHandler(e));
+    // window.addEventListener("beforeunload", e => this.beforeunloadHandler(e));
+    window.addEventListener("unload", e => this.beforeunloadHandler(e));
     if (localStorage.getItem("doneWords") != null)
       this.doneWords = JSON.parse(localStorage.getItem("doneWords"));
     if (localStorage.getItem("skipNum") != null)
       this.skipNum = localStorage.getItem("skipNum") - 0;
 
     this.words = arr.split("");
+    // if (this.is_weixin()) {
+    //   var t = this.getCookie("doneWords");
+    //   debugger;
+    //   var stringArr = t.split("");
+    //   var dones = [];
+    //   stringArr.forEach((word, i) => {
+    //     var obj = {};
+    //     if (word == "1") {
+    //       obj.right = true;
+    //     } else obj.right = false;
+    //     obj.word = this.words[i];
+    //     dones.push(obj);
+    //   });
+    //   this.test = JSON.stringify(dones);
+    // }
+
     this.word = this.words[this.doneWords.length];
-    // window.onbeforeunload = function() {
-    //   this.beforeunloadHandler(e);
-    // };
+    this.$notify({
+      type: "primary",
+      message: "本程序自动保存进度，无需一次性测完"
+    });
   },
   destroyed() {
-    window.removeEventListener("beforeunload", e =>
-      this.beforeunloadHandler(e)
-    );
+    window.removeEventListener("unload", e => this.beforeunloadHandler(e));
+    // window.removeEventListener("beforeunload", e =>
+    //   this.beforeunloadHandler(e)
+    // );
   },
   computed: {
     rightRate() {
@@ -87,11 +128,33 @@ export default {
     }
   },
   methods: {
+    setCookie(c_name, value, expiredays) {
+      var exdate = new Date();
+      exdate.setDate(exdate.getDate() + expiredays);
+      document.cookie =
+        c_name +
+        "=" +
+        escape(value) +
+        (expiredays == null ? "" : ";expires=" + exdate.toGMTString());
+    },
+    getCookie(c_name) {
+      if (document.cookie.length > 0) {
+        var c_start = document.cookie.indexOf(c_name + "=");
+        if (c_start != -1) {
+          c_start = c_start + c_name.length + 1;
+          var c_end = document.cookie.indexOf(";", c_start);
+          if (c_end == -1) c_end = document.cookie.length;
+          return unescape(document.cookie.substring(c_start, c_end));
+        }
+      }
+      return "";
+    },
     beforeunloadHandler(e) {
       this.save();
     },
     nextWord(flag) {
       if (this.doneWords.length === this.words.length) return;
+
       var obj = {};
       if (flag === true) {
         obj.right = true;
@@ -100,9 +163,31 @@ export default {
       }
       obj.word = this.word;
       this.doneWords.push(obj);
+      this.checkPayment();
       if (this.doneWords.length === this.words.length) return;
       this.word = this.words[this.finishCount];
       console.log(this.doneWords);
+    },
+    checkPayment() {
+      var showNode = [30, 90];
+      if (!this.isPayed) {
+        if (
+          showNode.some(v => v == this.finishCount) ||
+          this.finishCount % 30 == 0
+        ) {
+          this.showPay = true;
+          this.time_ad_show = new Date();
+        }
+      }
+    },
+    quitPay() {
+      this.showPay = false;
+      var timeNow = new Date();
+      if (timeNow - this.time_ad_show > 5000) {
+        console.log("大于5秒，关闭提示");
+        this.isPayed = true;
+        this.time_ad_show = null;
+      }
     },
     backWord() {
       if (this.doneWords.length - 1 >= 0) {
@@ -118,6 +203,38 @@ export default {
     save() {
       localStorage.setItem("doneWords", JSON.stringify(this.doneWords));
       localStorage.setItem("skipNum", this.skipNum + "");
+      // if (this.is_weixin()) {
+      //   var stringArr = [];
+      //   this.doneWords.forEach(word => {
+      //     if (word.right == true) stringArr.push("1");
+      //     else stringArr.push("0");
+      //   });
+      //   var str = stringArr.join("");
+      //   this.setCookie("doneWords", str, 365);
+      // }
+    },
+    clear() {
+      this.$dialog
+        .confirm({
+          title: "清空",
+          message: "是否清空所有已测试数据，从头开始？"
+        })
+        .then(() => {
+          this.words = arr.split("");
+          this.doneWords = [];
+          this.word = this.words[this.doneWords.length];
+        })
+        .catch(() => {
+          // on cancel
+        });
+    },
+    is_weixin() {
+      var ua = navigator.userAgent.toLowerCase();
+      if (ua.indexOf("micromessenger") != -1) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 };
@@ -125,7 +242,6 @@ export default {
 
 <style>
 .word-wraper {
-  margin-top: 20px;
 }
 .word {
   font-size: 290px;
@@ -142,5 +258,16 @@ button.van-button--normal {
   line-height: 30px;
   height: 50px;
   margin-bottom: 10px;
+}
+.payment {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  width: 100%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgb(240, 240, 240);
 }
 </style>
