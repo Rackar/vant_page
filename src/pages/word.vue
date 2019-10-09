@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="word-wraper">
     <div>
       <span class="word">{{word}}</span>
     </div>
@@ -10,7 +10,7 @@
         style="margin-right:30px;"
         size="normal"
         @click="nextWord(true)"
-      >已认识</van-button>
+      >认&nbsp;&nbsp;&nbsp;&nbsp;识</van-button>
       <van-button type="danger" size="normal" @click="nextWord(false)">不认识</van-button>
     </div>
     <div>已认识 ： {{rightCount}}个字， 不认识： {{wrongCount}}个字</div>
@@ -123,7 +123,10 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+.word-wraper {
+  margin-top: 20px;
+}
 .word {
   font-size: 290px;
   border: 4px solid black;
@@ -132,5 +135,12 @@ export default {
 
 .btn {
   margin-top: 30px;
+}
+button.van-button--normal {
+  font-size: 30px;
+  padding: 10px 20px;
+  line-height: 30px;
+  height: 50px;
+  margin-bottom: 10px;
 }
 </style>
