@@ -18,11 +18,12 @@
     <div>当前进度 ： 第{{finishCount}}字 / 总{{words.length}}字</div>
     <div>
       <van-button type="warning" size="small" style="margin-right:20px;" @click="backWord()">返回前一个修改</van-button>
-      <van-button type="warning" size="small" @click="showOption=!showOption">选项</van-button>
+      <van-button type="warning" size="small" @click="showOption=!showOption" v-show="false">选项</van-button>
       <div v-show="showOption">
         <van-field v-model="skipNum" label="跳过前多少字" placeholder="请输入数字">
           <van-button slot="button" size="small" type="primary" @click="jump(skipNum)">跳过</van-button>
         </van-field>
+        <van-button @click="save()">保存当前进度</van-button>
         <div>显示已完成数据</div>
         <div>显示错字集</div>
       </div>
@@ -50,8 +51,22 @@ export default {
     };
   },
   mounted() {
+    window.addEventListener("beforeunload", e => this.beforeunloadHandler(e));
+    if (localStorage.getItem("doneWords") != null)
+      this.doneWords = JSON.parse(localStorage.getItem("doneWords"));
+    if (localStorage.getItem("skipNum") != null)
+      this.skipNum = localStorage.getItem("skipNum") - 0;
+
     this.words = arr.split("");
-    this.word = this.words[0];
+    this.word = this.words[this.doneWords.length];
+    // window.onbeforeunload = function() {
+    //   this.beforeunloadHandler(e);
+    // };
+  },
+  destroyed() {
+    window.removeEventListener("beforeunload", e =>
+      this.beforeunloadHandler(e)
+    );
   },
   computed: {
     rightRate() {
@@ -72,6 +87,9 @@ export default {
     }
   },
   methods: {
+    beforeunloadHandler(e) {
+      this.save();
+    },
     nextWord(flag) {
       if (this.doneWords.length === this.words.length) return;
       var obj = {};
@@ -96,6 +114,10 @@ export default {
       this.words = arr.split("").slice(num);
       this.word = this.words[0];
       this.doneWords = [];
+    },
+    save() {
+      localStorage.setItem("doneWords", JSON.stringify(this.doneWords));
+      localStorage.setItem("skipNum", this.skipNum + "");
     }
   }
 };
