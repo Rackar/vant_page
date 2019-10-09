@@ -33,7 +33,7 @@
     <div v-show="showPay" class="payment">
       <h3>测字软件好用吗？欢迎鼓励开发者</h3>
       <div style="margin:10px 0 14px;">
-        <img src="/img/pay.jpg" alt width="300px" />
+        <img src="./pay.jpg" alt width="300px" />
       </div>
 
       <div style="margin-top:160px;">

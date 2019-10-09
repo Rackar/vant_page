@@ -1,15 +1,15 @@
-const CompressionWebpackPlugin = require("compression-webpack-plugin");
-const productionGzipExtensions = ["js", "css"];
-const isProduction = process.env.NODE_ENV === "production";
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const productionGzipExtensions = ['js', 'css']
+const isProduction = process.env.NODE_ENV === 'production'
 
 module.exports = {
-  publicPath: process.env.NODE_ENV === "production" ? "./" : "/",
+  publicPath: '',
 
   productionSourceMap: false, //去除build版本的map
   devServer: {
-    // publicPath: "/", // 和 publicPath 保持一致,
-    port: 9433,
-    proxy: "http://localhost:3002"
+    publicPath: '', // 和 publicPath 保持一致,
+    port: 9433
+    // proxy: 'http://localhost:3002'
     // {
 
     // "/api": {
@@ -28,17 +28,17 @@ module.exports = {
   //   }
   // }
   configureWebpack: config => {
-    config.devtool = "source-map";
+    config.devtool = 'source-map'
     if (isProduction) {
       config.plugins.push(
         new CompressionWebpackPlugin({
-          algorithm: "gzip",
-          test: new RegExp("\\.(" + productionGzipExtensions.join("|") + ")$"),
+          algorithm: 'gzip',
+          test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
           threshold: 10240,
           minRatio: 0.8
         })
-      );
-    } else {}
+      )
+    }
   },
   chainWebpack: config => {
     // config.module
@@ -49,6 +49,6 @@ module.exports = {
     //     options.fix = true;
     //     return options;
     //   });
-    config.plugins.delete("prefetch"); //关闭预拉取插件
+    config.plugins.delete('prefetch') //关闭预拉取插件
   }
-};
+}
