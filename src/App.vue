@@ -16,6 +16,10 @@ export default {
 </script>
 
 <style>
+h1 {
+  text-align: center;
+  margin: 10px 0 0 0;
+}
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -23,6 +27,6 @@ export default {
   text-align: center;
   color: #2c3e50;
 
-  padding-top: 30px;
+  /* padding-top: 30px; */
 }
 </style>
