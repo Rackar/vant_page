@@ -33,7 +33,12 @@
     </van-cell-group>
     <div>
       <div>上传相片:</div>
-      <van-uploader v-model="fileList" multiple :max-count="1" :after-read="avatar_upload" />
+      <van-uploader
+        v-model="fileList"
+        :max-count="1"
+        :before-read="beforeRead"
+        :after-read="avatar_upload"
+      />
     </div>
     <div>
       <van-button @click="savePerson">保存</van-button>
@@ -65,8 +70,36 @@ export default {
   },
 
   methods: {
+    // 返回布尔值
+    beforeRead(file) {
+      if (file.type !== "image/jpeg" && file.type !== "image/png") {
+        this.$toast("请上传 jpg/png 格式图片");
+        return false;
+      }
+
+      return true;
+    },
     avatar_upload(file) {
       console.log(file);
+      let obj = {
+        img: file,
+        userid: "id"
+      };
+
+      let data = new FormData();
+      data.append("avatar", file.file);
+      let config = {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      };
+      debugger;
+      this.$axios
+        .post("/api/uploadimagebase64", data, config)
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => console.log(err));
     },
     openPickDay(type) {
       this.show = true;

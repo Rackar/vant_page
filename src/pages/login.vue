@@ -1,39 +1,32 @@
 <template>
   <div>
-    <!-- <h2 style="text-align:center">登录</h2> -->
+    <h2 style="text-align:center">登录</h2>
     <van-cell-group>
       <!-- <van-field v-model="form.user_name" label="用户名" placeholder="请输入用户名" required /> -->
-      <van-field v-model="form.tel" label="手机号" placeholder="请输入手机号" required />
+      <van-field v-model="form.mobile" label="手机号" placeholder="请输入手机号" required />
       <van-field v-model="form.password" type="password" label="密码" placeholder="请输入密码" required />
-      <!-- <van-field
-        v-model="form.password2"
-        type="password"
-        label="确认密码"
-        placeholder="再次输入密码"
-        required
-      />-->
     </van-cell-group>
-    <van-button>登录/注册</van-button>
+    <van-button @click="onSubmit">登录/注册</van-button>
   </div>
 </template>
 
 <script>
 export default {
-  name: "sighup",
+  name: "login",
   data() {
     return {
       loading: false,
       form: {
         user_name: "",
         real_name: "",
-        tel: "",
+        mobile: "",
         birthday: "",
         sex: "",
         password: "",
         password2: ""
       },
       rules: {
-        tel: [{ required: true, message: "请输入手机号", trigger: "blur" }],
+        mobile: [{ required: true, message: "请输入手机号", trigger: "blur" }],
         password: [{ required: true, message: "请输入密码", trigger: "change" }]
       }
     };
@@ -43,72 +36,52 @@ export default {
       console.log("submit!");
 
       // this.$emit("refreshID", this.form.user_name);
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          // fetch("http://localhost:3012/users/login", {
-          //   method: "POST",
-          //   mode: "cors",
-          //   body: JSON.stringify(this.form),
-          //   headers: {
-          //     "content-type": "application/json"
-          //   }
-          // })
-          this.loading = true;
-          this.$axios
-            .post("/user/login", {
-              mobile: this.form.tel,
-              pwd: this.form.password
-            })
-            .then(res => {
-              // console.log(res);
-              // debugger;
-              if (res.data.status == 1) {
-                this.loading = false;
-                //   this.totalstars -= stars;
-                this.$emit("refreshID", this.form.user_name);
-                console.log(res.data);
+      this.$axios
+        .post("/user/login", {
+          mobile: this.form.mobile,
+          pwd: this.form.password
+        })
+        .then(res => {
+          // console.log(res);
+          // debugger;
+          if (res.data.status == 1) {
+            this.loading = false;
+            // this.$emit("refreshID", this.form.user_name);
+            console.log(res.data);
 
-                this.$message({
-                  showClose: true,
-                  duration: 1500,
-                  type: "success",
-                  message: res.data && res.data.msg
-                });
-                var token = "Bearer " + res.data.data.token;
-
-                // this.$store.state.token = token;
-                this.$store.commit("login_saveToken", token);
-
-                console.log(this.$route.query);
-                let previousUrl = "/";
-                if (this.$route.query && this.$route.query.redirect)
-                  previousUrl = this.$route.query.redirect;
-                this.$router.push(previousUrl);
-              } else {
-                this.loading = false;
-                this.$message({
-                  showClose: true,
-                  duration: 1500,
-                  type: "error",
-                  message: res.data && res.data.msg
-                });
-              }
-            })
-            .catch(err => {
-              this.loading = false;
-              console.log(err);
-              this.$message({
-                showClose: true,
-                duration: 1500,
-                type: "error",
-                message: err.response.data.msg
-              });
+            this.$toast({
+              duration: 1500,
+              type: "success",
+              message: res.data && res.data.msg
             });
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
+            var token = "Bearer " + res.data.data.token;
+
+            // this.$store.state.token = token;
+            this.$store.commit("login_saveToken", token);
+
+            //   console.log(this.$route.query);
+            //   let previousUrl = "/";
+            //   if (this.$route.query && this.$route.query.redirect)
+            //     previousUrl = this.$route.query.redirect;
+            //   this.$router.push(previousUrl);
+          } else {
+            this.loading = false;
+            this.$toast({
+              duration: 1500,
+              type: "fail",
+              message: res.data && res.data.msg
+            });
+          }
+        })
+        .catch(err => {
+          this.loading = false;
+          console.log(err);
+          this.$toast({
+            duration: 1500,
+            type: "error",
+            message: err.response.data.msg
+          });
+        });
     }
   }
 };
