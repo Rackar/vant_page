@@ -13,29 +13,17 @@
     <!-- <van-collapse v-model="activeNames">
       <van-collapse-item title="全部收藏" value="展开" name="1" icon="shop-o">所有内容</van-collapse-item>
     </van-collapse>-->
-    <van-divider content-position="left">历史</van-divider>
+    <van-divider content-position="left">我创建的</van-divider>
     <van-grid :gutter="10">
       <van-grid-item
-        v-for="value in favoriteList"
-        :key="value.id"
-        icon="photo-o"
+        v-for="value in myList"
+        :key="value._id"
         :text="value.name"
-        @click="jumpToSingle(value.id)"
-      />
+        @click="jumpToSingle(value._id)"
+      >
+        <van-image :src="$imgServer+value.avatarfilePath" />
+      </van-grid-item>
     </van-grid>
-    <!-- <van-collapse v-model="activeNames">
-      <van-collapse-item title="全部历史" value="展开" name="2" icon="shop-o">
-        <van-grid :gutter="10">
-          <van-grid-item
-            v-for="value in 8"
-            :key="value"
-            icon="photo-o"
-            text="文字"
-            @click="jumpToSingle(value)"
-          />
-        </van-grid>
-      </van-collapse-item>
-    </van-collapse>-->
   </div>
 </template>
 
@@ -50,7 +38,8 @@ export default {
     return {
       activeNames: ["1"],
       favoriteList: [],
-      historyList: []
+      historyList: [],
+      myList: []
     };
   },
   methods: {
@@ -58,9 +47,21 @@ export default {
       this.$router.push(`/single/${id}`);
     },
     fetchInitData() {
-      for (let index = 0; index < 8; index++) {
+      for (let index = 0; index < 1; index++) {
         this.favoriteList.push(singleStuc);
         this.historyList.push(singleStuc);
+      }
+      let id = this.$store.state.userid;
+      if (id) {
+        this.$axios
+          .get("/person/user/" + id)
+          .then(res => {
+            console.log(res);
+            this.myList = res.data.data;
+          })
+          .catch(err => {
+            this.$toast("获取数据错误" + err);
+          });
       }
     }
   },

@@ -11,7 +11,7 @@
 
     <van-action-sheet v-model="actionShow" :actions="actions" @select="onSelect" />
     <div>
-      <van-image round width="10rem" height="10rem" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+      <van-image round width="10rem" height="10rem" :src="avatarUrl" v-show="avatarUrl" />
     </div>
     <div></div>
     <h3>{{userinfo.name}}</h3>
@@ -65,8 +65,8 @@ export default {
   data() {
     return {
       articles: [
-        { title: "在高考的那一年里", id: "2", value: "老大" },
-        { title: "在高考的那一年里2", id: "3", value: "老2" }
+        // { title: "在高考的那一年里", id: "2", value: "老大" },
+        // { title: "在高考的那一年里2", id: "3", value: "老2" }
       ],
       userinfo: { name: "", birthday: 0, deathday: 0, info: "" },
       images: [
@@ -76,6 +76,7 @@ export default {
       imageInfo: "",
       show: false,
       index: 0,
+      avatarUrl: "",
       ImageList: [
         {
           url: "0",
@@ -112,10 +113,10 @@ export default {
     fetchSinglePerson(id = 0) {
       console.log(id);
       this.userinfo = {
-        name: "毛18",
+        name: "",
         birthday: 2018,
         deathday: 2019,
-        info: "阿斯顿发的说asdfasdf sadf法fsaasdfsad发送到发斯蒂芬df是对方"
+        info: ""
       };
       id = this.id;
       this.$axios
@@ -124,6 +125,7 @@ export default {
           console.log(res);
           this.userinfo = res.data.data;
           this.articles = this.userinfo.articles;
+          this.avatarUrl = this.$imgServer + res.data.data.avatarfilePath;
         })
         .catch(err => {
           this.$toast("获取数据错误" + err);

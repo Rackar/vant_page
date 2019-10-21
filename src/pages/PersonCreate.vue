@@ -60,6 +60,7 @@ export default {
       opendPickDay: "",
       birthday: "",
       deathday: "",
+      avatarfilePath: "",
 
       minDate: new Date(1900, 1, 1),
       maxDate: new Date(2025, 10, 1),
@@ -68,7 +69,11 @@ export default {
       show: false
     };
   },
-
+  created() {
+    if (!this.$store.state.token) {
+      this.$router.push("/login");
+    }
+  },
   methods: {
     // 返回布尔值
     beforeRead(file) {
@@ -93,11 +98,11 @@ export default {
           "Content-Type": "multipart/form-data"
         }
       };
-      debugger;
       this.$axios
-        .post("/api/uploadimagebase64", data, config)
+        .post("/api/uploadimage", data, config)
         .then(res => {
           console.log(res);
+          this.avatarfilePath = res.data.data.filename;
         })
         .catch(err => console.log(err));
     },
@@ -135,10 +140,17 @@ export default {
         name: this.name,
         birthday: this.birthday,
         deathday: this.deathday,
-        info: this.info
+        info: this.info,
+        avatarfilePath: this.avatarfilePath,
+        createrId: this.$store.state.userid
       };
       this.$axios.post("/person", person).then(res => {
         console.log(res);
+        if (res.status == 200 && res.data.status == 1) {
+          this.$router.back();
+        } else {
+          this.$toast.fail("保存出现问题，请重试");
+        }
       });
     }
   }
