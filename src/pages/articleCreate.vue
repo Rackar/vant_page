@@ -27,6 +27,11 @@ export default {
       default: ""
     }
   },
+  created() {
+    if (!this.$store.state.token) {
+      this.$router.push("/login");
+    }
+  },
   data() {
     return {
       title: "",
@@ -40,7 +45,7 @@ export default {
     saveArticle() {
       var obj = {
         personid: this.id,
-        createrid: "5",
+        createrid: this.$store.state.userid,
         title: this.title,
         text: this.text
       };

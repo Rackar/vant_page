@@ -28,9 +28,9 @@
       <span v-show="articles.length==0" @click="onSelect({option:'article'})">尚未添加文章</span>
       <van-cell
         v-for="item in articles"
-        :key="item.id"
+        :key="item._id"
         :title="item.title"
-        :to="'/article/'+item.id"
+        :to="'/article/'+item._id"
         :value="item.value"
       />
     </div>
