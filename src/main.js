@@ -58,6 +58,22 @@ Vue.prototype.$axios = axios
 Vue.prototype.$imgServer = 'http://localhost:3002/'
 Vue.config.productionTip = false
 
+router.beforeResolve((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    if (!store.state.token) {
+      next({
+        name: 'login'
+      })
+    } else {
+      next()
+    }
+  } else {
+    next() // 确保一定要调用 next()
+  }
+})
+
 new Vue({
   router,
   store,

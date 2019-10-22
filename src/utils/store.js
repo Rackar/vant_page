@@ -1,55 +1,64 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import Vue from 'vue'
+import Vuex from 'vuex'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     temp: {
       ifTemp: false,
-      title: "",
-      content: ""
+      title: '',
+      content: ''
     },
-    token: "",
-    userid: "",
-    username: ""
+    token: '',
+    userid: '',
+    username: '',
+    currentPerson: {
+      articles: [],
+      name: '',
+      _id: '',
+      info: ''
+    }
   },
   mutations: {
     login_saveToken(state, data) {
-      state.token = data;
-      window.localStorage.setItem("token", data);
+      state.token = data
+      window.localStorage.setItem('token', data)
 
       function parseJwt(token) {
-        var base64Url = token.split(".")[1];
+        var base64Url = token.split('.')[1]
         var base64 = decodeURIComponent(
           atob(base64Url)
-            .split("")
+            .split('')
             .map(function(c) {
-              return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+              return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
             })
-            .join("")
-        );
+            .join('')
+        )
 
-        return JSON.parse(base64);
+        return JSON.parse(base64)
       }
-      var dd = parseJwt(data.split(" ")[1]);
+      var dd = parseJwt(data.split(' ')[1])
       // console.log(dd);
-      state.userid = dd.userid;
-      state.username = dd.username;
+      state.userid = dd.userid
+      state.username = dd.username
     },
     logout_delToken(state) {
-      state.token = "";
-      window.localStorage.removeItem("token");
+      state.token = ''
+      window.localStorage.removeItem('token')
 
       // console.log(dd);
-      state.userid = "";
-      state.username = "";
+      state.userid = ''
+      state.username = ''
     },
     saveTempContent(state, data) {
-      state.temp.title = data.title;
-      state.temp.content = data.content;
-      state.temp.ifTemp = true;
+      state.temp.title = data.title
+      state.temp.content = data.content
+      state.temp.ifTemp = true
+    },
+    setCurrentPerson(state, data) {
+      state.currentPerson = data
     }
   },
   actions: {}
-});
+})

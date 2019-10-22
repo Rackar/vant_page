@@ -17,13 +17,7 @@
     <h3>{{userinfo.name}}</h3>
     <div class="year">{{userinfo.birthday}} -- {{userinfo.deathday}}</div>
     <div class="info">{{userinfo.info}}</div>
-    <!-- <div>
-      <van-button round type="primary">文章</van-button>
-      <van-button round type="primary">照片</van-button>
-      <van-button round type="primary">编辑</van-button>
-      <van-button round type="primary">分享</van-button>
-      <van-button round type="primary">投诉</van-button>
-    </div>-->
+
     <div>
       <span v-show="articles.length==0" @click="onSelect({option:'article'})">尚未添加文章</span>
       <van-cell
@@ -123,6 +117,7 @@ export default {
         .get("/person/" + id)
         .then(res => {
           console.log(res);
+          this.$store.commit("setCurrentPerson", res.data.data);
           this.userinfo = res.data.data;
           this.articles = this.userinfo.articles;
           this.avatarUrl = this.$imgServer + res.data.data.avatarfilePath;

@@ -2,8 +2,11 @@
   <div>
     <navBarTop />
     <h3>{{article.title}}</h3>
-    <div>{{article.contant}}</div>
-    <div>前一篇 下一篇</div>
+    <div class="text">
+      <pre style="white-space: pre-wrap; text-align:left;padding:16px;">{{article.text}}</pre>
+    </div>
+
+    <!-- <div>前一篇 下一篇</div> -->
   </div>
 </template>
 
@@ -21,7 +24,7 @@ export default {
   },
   data() {
     return {
-      article: { title: "标题", contant: "内容" }
+      article: { title: "标题", text: "内容" }
     };
   },
   created() {
@@ -29,11 +32,20 @@ export default {
   },
   methods: {
     fetchArticle(id = "0") {
-      console.log(id);
+      let person = this.$store.state.currentPerson;
+      let article = person.articles.find(el => el._id == id);
+      if (article) {
+        this.article = article;
+      }
     }
   }
 };
 </script>
 
-<style lang="scss" scoped>
+<style  scoped>
+.text {
+  width: 100%;
+  overflow: auto;
+  white-space: pre-wrap;
+}
 </style>
