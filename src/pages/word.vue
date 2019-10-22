@@ -1,7 +1,11 @@
 <template>
-  <div class="word-wraper">
-    <div>
+  <div>
+    <div class="word-wraper">
       <span class="word">{{word}}</span>
+      <span class="tianzige zs"></span>
+      <span class="tianzige zx"></span>
+      <span class="tianzige ys"></span>
+      <span class="tianzige yx"></span>
     </div>
 
     <div class="btn">
@@ -20,6 +24,7 @@
     <div>
       <van-button type="warning" size="small" style="margin-right:20px;" @click="backWord()">返回</van-button>
       <van-button type="warning" size="small" style="margin-right:20px;" @click="clear()">清空</van-button>
+      <van-button type="warning" size="small" style="margin-right:20px;" @click="showDIY=true">自定</van-button>
       <van-button type="warning" size="small" @click="showOption=!showOption" v-show="false">选项</van-button>
       <div v-show="showOption">
         <van-field v-model="skipNum" label="跳过前多少字" placeholder="请输入数字">
@@ -30,6 +35,18 @@
         <div>显示错字集</div>
       </div>
     </div>
+    <van-popup
+      v-model="showDIY"
+      position="bottom"
+      closeable
+      close-icon="close"
+      :style="{ height: '20%' }"
+    >
+      <div>连续输入，无需空格或标点</div>
+      <van-field v-model="wordsInputDIY" placeholder="请输入自定义汉字集合" />
+      <van-button type="warning" size="small" style="margin-right:20px;" @click="useDIYwords()">确定更改</van-button>
+    </van-popup>
+
     <div v-show="showPay" class="payment">
       <h3>测字软件好用吗？欢迎鼓励开发者</h3>
       <div style="margin:10px 0 14px;">
@@ -67,7 +84,9 @@ export default {
       showPay: false,
       isPayed: false,
       test: "",
-      time_ad_show: null
+      time_ad_show: null,
+      showDIY: false,
+      wordsInputDIY: ""
     };
   },
   mounted() {
@@ -79,22 +98,6 @@ export default {
       this.skipNum = localStorage.getItem("skipNum") - 0;
 
     this.words = arr.split("");
-    // if (this.is_weixin()) {
-    //   var t = this.getCookie("doneWords");
-    //   debugger;
-    //   var stringArr = t.split("");
-    //   var dones = [];
-    //   stringArr.forEach((word, i) => {
-    //     var obj = {};
-    //     if (word == "1") {
-    //       obj.right = true;
-    //     } else obj.right = false;
-    //     obj.word = this.words[i];
-    //     dones.push(obj);
-    //   });
-    //   this.test = JSON.stringify(dones);
-    // }
-
     this.word = this.words[this.doneWords.length];
     this.$notify({
       type: "primary",
@@ -212,17 +215,13 @@ export default {
       this.doneWords = [];
     },
     save() {
-      localStorage.setItem("doneWords", JSON.stringify(this.doneWords));
-      localStorage.setItem("skipNum", this.skipNum + "");
-      // if (this.is_weixin()) {
-      //   var stringArr = [];
-      //   this.doneWords.forEach(word => {
-      //     if (word.right == true) stringArr.push("1");
-      //     else stringArr.push("0");
-      //   });
-      //   var str = stringArr.join("");
-      //   this.setCookie("doneWords", str, 365);
-      // }
+      if (this.wordsInputDIY == "") {
+        localStorage.setItem("doneWords", JSON.stringify(this.doneWords));
+        localStorage.setItem("skipNum", this.skipNum + "");
+      } else {
+        localStorage.removeItem("doneWords");
+        localStorage.removeItem("doneWords");
+      }
     },
     clear() {
       this.$dialog
@@ -234,10 +233,32 @@ export default {
           this.words = arr.split("");
           this.doneWords = [];
           this.word = this.words[this.doneWords.length];
+          this.wordsInputDIY = "";
+          localStorage.removeItem("doneWords");
+          localStorage.removeItem("doneWords");
         })
         .catch(() => {
           // on cancel
         });
+    },
+    useDIYwords() {
+      if (this.wordsInputDIY) {
+        this.$dialog
+          .confirm({
+            title: "确定使用输入项作为测试字集？",
+            message: "当前已测试数据即将清空，且测试字集为一次性。"
+          })
+          .then(() => {
+            this.showDIY = false;
+
+            this.words = this.wordsInputDIY.split("");
+            this.doneWords = [];
+            this.word = this.words[this.doneWords.length];
+          })
+          .catch(() => {
+            // on cancel
+          });
+      }
     },
     is_weixin() {
       var ua = navigator.userAgent.toLowerCase();
@@ -252,10 +273,57 @@ export default {
 </script>
 
 <style>
+.word-wraper {
+  width: 20rem;
+  height: 20rem;
+  position: relative;
+  margin: 0 auto;
+  /* border: 1px red solid; */
+}
+.tianzige {
+  /* background-color: aqua; */
+  width: 10rem;
+  height: 10rem;
+  position: absolute;
+  margin: 0;
+}
+.zs {
+  left: 0px;
+  top: 0px;
+  border-style: none dashed dashed none;
+  border-width: 1px;
+  border-color: rgba(160, 156, 156, 0.472);
+}
+.ys {
+  left: 10rem;
+  top: 0;
+  margin-left: 1px;
+}
+.zx {
+  top: 10rem;
+  left: 0;
+  margin-top: 1px;
+}
+.yx {
+  top: 10rem;
+  left: 10rem;
+  margin-left: 0px;
+  margin-top: 0px;
+
+  border-style: dashed none none dashed;
+  border-width: 1px;
+  border-color: rgba(160, 156, 156, 0.472);
+}
 .word {
-  font-size: 290px;
-  border: 4px solid black;
-  padding: 20px;
+  /* display: none; */
+  font-size: 18rem;
+  line-height: 18rem;
+  /* line-height: 20rem; */
+  border: 6px solid rgb(216, 214, 214);
+  position: absolute;
+  left: -4px;
+  top: -4px;
+  padding: 1rem;
 }
 
 .btn {

@@ -16,6 +16,10 @@ export default {
 </script>
 
 <style>
+* {
+  margin: 0;
+  padding: 0;
+}
 h1 {
   text-align: center;
   margin: 10px 0 0 0;
@@ -26,6 +30,7 @@ h1 {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  margin-top: 10px;
 
   /* padding-top: 30px; */
 }
