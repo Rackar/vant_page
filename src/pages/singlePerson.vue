@@ -38,8 +38,8 @@
       @change="onChange"
     >
       <template v-slot:index>
-        <div>第{{ index }}页</div>
-        <div>名称</div>
+        <div>第{{ index+1 }}页</div>
+        <div>{{imagesRawData[index].title}}</div>
         <span class="bottom slot">{{imageInfo}}</span>
       </template>
     </van-image-preview>
@@ -61,6 +61,7 @@ export default {
         "https://img.yzcdn.cn/vant/apple-1.jpg",
         "https://img.yzcdn.cn/vant/apple-2.jpg"
       ],
+      imagesRawData: [],
       imageInfo: "",
       show: false,
       index: 0,
@@ -94,7 +95,7 @@ export default {
   },
   created() {
     this.fetchSinglePerson(this.id);
-    this.getImagesList(this.id);
+
     this.getArticlesList(this.id);
   },
   methods: {
@@ -118,24 +119,15 @@ export default {
           this.userinfo = res.data.data;
           this.articles = this.userinfo.articles;
           this.avatarUrl = this.$imgServer + res.data.data.avatarfilePath;
+          this.imagesRawData = this.userinfo.photos;
+          this.getImagesList();
         })
         .catch(err => {
           this.$toast("获取数据错误" + err);
         });
     },
-    getImagesList(id) {
-      var ImageList = [
-        {
-          url: "https://img.yzcdn.cn/vant/apple-1.jpg",
-          name: "1.jpg",
-          info: "第一个图的的的大多数疯狂夺金爱丽丝的房间爱丽丝的房间介绍1"
-        },
-        {
-          url: "https://img.yzcdn.cn/vant/apple-2.jpg",
-          name: "2.jpg",
-          info: "介绍2"
-        }
-      ];
+    getImagesList() {
+      var ImageList = this.imagesRawData;
       this.ImageList = ImageList;
       this.images = ImageList.map(data => data.url);
       this.onChange(0);

@@ -18,7 +18,7 @@
 // import navBarTop from "./navBarTop";
 // import singlePerson from "../pages/singlePerson";
 export default {
-  name: "HelloWorld",
+  name: "mainPage",
   props: {
     msg: String
   },

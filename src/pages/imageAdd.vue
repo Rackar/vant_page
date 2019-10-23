@@ -1,5 +1,6 @@
 <template>
   <div>
+    <van-nav-bar title="上传图片" left-text="返回" left-arrow @click-left="$router.back()" />
     <div style="height:350px;width:80%;margin:10px auto">
       <h2 style="margin-bottom:100px;">上传相片:</h2>
       <van-uploader
@@ -11,32 +12,26 @@
       />
     </div>
     <div style>
-      <van-button>保存</van-button>
+      <van-button @click="saveImgs">保存</van-button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    id: {
+      type: String,
+      default: ""
+    }
+  },
   data() {
     return {
       fileList: [
-        // { url: "https://img.yzcdn.cn/vant/cat.jpeg" },
-        // Uploader 根据文件后缀来判断是否为图片文件
         // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
         // { url: "https://cloud-image", isImage: true }
       ],
-      info: "",
-      opendPickDay: "",
-      birthday: "",
-      deathday: "",
-      avatarfilePath: "",
-
-      minDate: new Date(1900, 1, 1),
-      maxDate: new Date(2025, 10, 1),
-      name: "",
-      currentDate: new Date(),
-      show: false
+      uploadedImgs: []
     };
   },
   created() {
@@ -56,6 +51,9 @@ export default {
     },
     delImg(file, detail) {
       console.log(file, detail);
+      this.uploadedImgs = this.uploadedImgs.filter(
+        obj => obj.name != file.file.name
+      );
     },
     avatar_upload(file) {
       console.log(file);
@@ -74,57 +72,25 @@ export default {
       this.$axios
         .post("/api/uploadimage", data, config)
         .then(res => {
-          console.log(res);
-          this.avatarfilePath = res.data.data.filename;
+          let imageFilePath = res.data.data.filename;
+          this.uploadedImgs.push({
+            name: file.file.name,
+            url: this.$imgServer + imageFilePath
+          });
         })
         .catch(err => console.log(err));
     },
-    openPickDay(type) {
-      this.show = true;
-      this.opendPickDay = type;
-    },
-    cancelBirthday() {
-      if (this.opendPickDay == "birth") this.birthday = "";
-      else if (this.opendPickDay == "death") this.deathday = "";
-      this.show = false;
-    },
-    pickedBirthday(value) {
-      console.log(value);
-      var today = value;
-      today.setHours(today.getHours() + 8);
-      today = today.toISOString().substring(0, 7);
-      console.log(today);
-      this.show = false;
-      if (this.opendPickDay == "birth") this.birthday = today;
-      else if (this.opendPickDay == "death") this.deathday = today;
-      this.opendPickDay = "";
-    },
-    formatter(type, value) {
-      if (type === "year") {
-        return `${value}年`;
-      } else if (type === "month") {
-        return `${value}月`;
-      }
-      return value;
-    },
-
-    savePerson() {
-      let person = {
-        name: this.name,
-        birthday: this.birthday,
-        deathday: this.deathday,
-        info: this.info,
-        avatarfilePath: this.avatarfilePath,
-        createrId: this.$store.state.userid
+    saveImgs() {
+      let data = {
+        photos: this.uploadedImgs,
+        personid: this.id
       };
-      this.$axios.post("/person", person).then(res => {
-        console.log(res);
-        if (res.status == 200 && res.data.status == 1) {
-          this.$router.back();
-        } else {
-          this.$toast.fail("保存出现问题，请重试");
-        }
-      });
+      this.$axios
+        .post("/person/photos", data)
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => console.log(err));
     }
   }
 };
