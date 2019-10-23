@@ -1,13 +1,6 @@
 <template>
   <div class="single">
-    <van-nav-bar
-      title="人物"
-      left-text="返回"
-      right-text="操作"
-      left-arrow
-      @click-left="onClickLeft"
-      @click-right="onClickRight"
-    />
+    <navBarTop title="人物" :callbackRight="onClickRight" />
 
     <van-action-sheet v-model="actionShow" :actions="actions" @select="onSelect" />
     <div>
@@ -54,8 +47,9 @@
 </template>
 
 <script>
+import navBarTop from "../components/navBarTop";
 export default {
-  components: {},
+  components: { navBarTop },
   data() {
     return {
       articles: [
@@ -104,6 +98,9 @@ export default {
     this.getArticlesList(this.id);
   },
   methods: {
+    cb() {
+      this.$toast("成功了");
+    },
     fetchSinglePerson(id = 0) {
       console.log(id);
       this.userinfo = {

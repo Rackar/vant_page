@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navBarTop />
+    <navBarTop title="文章" />
     <h3>{{article.title}}</h3>
     <div class="text">
       <pre style="white-space: pre-wrap; text-align:left;padding:16px;">{{article.text}}</pre>

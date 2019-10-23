@@ -6,7 +6,8 @@
       <van-field v-model="form.mobile" label="手机号" placeholder="请输入手机号" required />
       <van-field v-model="form.password" type="password" label="密码" placeholder="请输入密码" required />
     </van-cell-group>
-    <van-button @click="onSubmit">登录/注册</van-button>
+    <van-button @click="onSubmit">登录</van-button>
+    <van-button @click="$router.push('/signup')" style="margin-left:20px;">注册</van-button>
   </div>
 </template>
 
