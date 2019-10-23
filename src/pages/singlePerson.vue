@@ -162,6 +162,7 @@ export default {
       if (item.option == "article") {
         this.$router.push("/articleCreate/" + this.id);
       } else if (item.option == "photo") {
+        this.$router.push("/imageAdd/" + this.id);
       } else if (item.option == "edit") {
       } else if (item.option == "call") {
       }

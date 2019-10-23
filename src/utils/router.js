@@ -63,6 +63,7 @@ export default new Router({
           '../pages/PersonCreate.vue'
         )
     },
+
     {
       name: 'article',
       path: '/article/:id',
@@ -82,6 +83,17 @@ export default new Router({
         import(
           /* webpackChunkName: "articleCreate" */
           '../pages/articleCreate.vue'
+        )
+    },
+    {
+      name: 'imageAdd',
+      path: '/imageAdd/:id',
+      props: true,
+      meta: { requiresAuth: true },
+      component: () =>
+        import(
+          /* webpackChunkName: "imageAdd" */
+          '../pages/imageAdd.vue'
         )
     }
   ]
