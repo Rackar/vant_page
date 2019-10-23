@@ -10,7 +10,8 @@ module.exports = {
     publicPath: '', // 和 publicPath 保持一致,
     port: 9433
     // proxy: 'http://localhost:3002'
-    // {
+
+    // proxy:{
 
     // "/api": {
     //   target: "http://localhost:3000", //设置你调用的接口域名和端口号 别忘了加http
