@@ -46,7 +46,7 @@
       @change="onChange"
     >
       <template v-slot:index>
-        <div>第{{ index+1 }}页</div>
+        <div>第{{ index+1 }}张</div>
         <div>{{imagesRawData[index].title}}</div>
         <span class="bottom slot">{{imageInfo}}</span>
       </template>

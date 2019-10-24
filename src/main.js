@@ -5,7 +5,7 @@ import store from './utils/store'
 
 import Vant from 'vant'
 import 'vant/lib/index.css'
-import { Lazyload } from 'vant'
+import {Lazyload} from 'vant'
 let lazyOption = {
   loading: '/img/loading.jpg',
   error: '/img/loading.jpg'
@@ -32,27 +32,27 @@ axios.interceptors.request.use(
     return Promise.reject(err)
   }
 )
-// axios.interceptors.response.use(
-//   function (response) {
-//     // 用户信息是否超时，重定向到登录页面
-//     // debugger;
-//     if (response.data.status === 0) {
-//       localStorage.clear();
-//       router.replace({
-//         path: "/login",
-//         query: {
-//           redirect: router.currentRoute.fullPath
-//         }
-//       });
-//       Vant.Toast("请登录后操作");
-//     }
-//     return response;
-//   },
-//   function (error) {
-//     // Do something with response error
-//     return Promise.reject(error);
-//   }
-// );
+axios.interceptors.response.use(
+  function(response) {
+    // 用户信息是否超时，重定向到登录页面
+    // debugger;
+    if (response.status != 200) {
+      localStorage.clear()
+      router.replace({
+        path: '/login',
+        query: {
+          redirect: router.currentRoute.fullPath
+        }
+      })
+      Vant.Toast('请登录后操作')
+    }
+    return response
+  },
+  function(error) {
+    // Do something with response error
+    return Promise.reject(error)
+  }
+)
 
 Vue.prototype.$axios = axios
 Vue.prototype.$imgServer = 'http://localhost:3002/'
