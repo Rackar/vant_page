@@ -1,6 +1,13 @@
 <template>
   <div class="single">
-    <navBarTop title="人物" :callbackRight="onClickRight" />
+    <van-nav-bar
+      title="人物"
+      left-text="返回"
+      left-arrow
+      @click-left="$router.back()"
+      right-text="操作"
+      @click-right="onClickRight()"
+    />
 
     <van-action-sheet v-model="actionShow" :actions="actions" @select="onSelect" />
     <div>
@@ -47,9 +54,8 @@
 </template>
 
 <script>
-import navBarTop from "../components/navBarTop";
 export default {
-  components: { navBarTop },
+  components: {},
   data() {
     return {
       articles: [
@@ -115,7 +121,7 @@ export default {
       };
       id = this.id;
       this.$axios
-        .get("/person/" + id)
+        .get("/api/person/" + id)
         .then(res => {
           console.log(res);
           this.$store.commit("setCurrentPerson", res.data.data);
@@ -170,7 +176,7 @@ export default {
           username: this.username
         };
         this.$axios
-          .post("/person/liked", data)
+          .post("/api/person/liked", data)
           .then(res => {
             console.log(res);
           })

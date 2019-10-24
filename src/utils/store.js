@@ -25,8 +25,8 @@ export default new Vuex.Store({
       let userinfo = setUserIdAndNameFormToken(token)
       state.userid = userinfo.userid
       state.username = userinfo.username
-      state.token = 'Bearer ' + token
-
+      // state.token = 'Bearer ' + token
+      state.token = token
       window.localStorage.setItem('token', state.token)
       function parseJwt(token) {
         var base64Url = token.split('.')[1]

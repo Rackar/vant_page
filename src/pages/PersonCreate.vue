@@ -144,7 +144,7 @@ export default {
         avatarfilePath: this.avatarfilePath,
         createrId: this.$store.state.userid
       };
-      this.$axios.post("/person", person).then(res => {
+      this.$axios.post("/api/person", person).then(res => {
         console.log(res);
         if (res.status == 200 && res.data.status == 1) {
           this.$router.back();

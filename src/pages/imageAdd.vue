@@ -86,7 +86,7 @@ export default {
         personid: this.id
       };
       this.$axios
-        .post("/person/photos", data)
+        .post("/api/person/photos", data)
         .then(res => {
           console.log(res);
         })

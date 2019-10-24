@@ -6,7 +6,7 @@
       <div class="subtitle">为那些最珍贵的人做纪念</div>
 
       <div class="button-group">
-        <van-button icon="star-o" type="primary" @click="personCreate">注册</van-button>
+        <van-button icon="star-o" type="primary" @click="$router.push('/signup')">注册</van-button>
         <van-button icon="star-o" type="primary" @click="personCreate">新建人物</van-button>
       </div>
     </div>

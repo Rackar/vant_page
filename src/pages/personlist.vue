@@ -11,7 +11,7 @@
         :text="value.name"
         @click="jumpToSingle(value._id)"
       >
-        <van-image :src="$imgServer+value.avatarfilePath" />
+        <van-image :src="value&&value.avatarfilePath?$imgServer+value.avatarfilePath:''" />
       </van-grid-item>
     </van-grid>
     <van-divider content-position="left">我的收藏</van-divider>
@@ -22,7 +22,7 @@
         :text="value.name"
         @click="jumpToSingle(value._id)"
       >
-        <van-image :src="$imgServer+value.avatarfilePath" />
+        <van-image :src="value&&value.avatarfilePath?$imgServer+value.avatarfilePath:''" />
       </van-grid-item>
     </van-grid>
   </div>
@@ -55,7 +55,7 @@ export default {
       let id = this.$store.state.userid;
       if (id) {
         this.$axios
-          .get("/person/user/" + id)
+          .get("/api/person/user/" + id)
           .then(res => {
             console.log(res);
             this.myList = res.data.data;
@@ -64,7 +64,7 @@ export default {
             this.$toast("获取数据错误" + err);
           });
         this.$axios
-          .get("/person/getlikings/" + id)
+          .get("/api/person/getlikings/" + id)
           .then(res => {
             console.log(res);
             this.favoriteList = res.data.data;

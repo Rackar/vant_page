@@ -49,7 +49,7 @@ export default {
         title: this.title,
         text: this.text
       };
-      this.$axios.post("/person/article", obj).then(res => {
+      this.$axios.post("/api/person/article", obj).then(res => {
         console.log(res);
         this.$toast("保存成功");
 
