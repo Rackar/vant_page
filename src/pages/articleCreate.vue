@@ -1,7 +1,7 @@
 <template>
   <div>
     <van-nav-bar
-      :title="'记得'"
+      title="新增文章"
       left-text="返回"
       right-text="保存"
       left-arrow

@@ -11,6 +11,10 @@ export default {
   name: "app",
   components: {
     mainPage
+  },
+  created() {
+    var token = window.localStorage.token;
+    if (token) this.$store.commit("login_saveToken", token);
   }
 };
 </script>
@@ -25,5 +29,9 @@ export default {
 
   /* background-color: #159957;
   background-image: linear-gradient(120deg, #155799, #159957); */
+}
+body {
+  margin: 0 auto;
+  width: 100%;
 }
 </style>

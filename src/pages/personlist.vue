@@ -1,15 +1,5 @@
 <template>
   <div>
-    <van-divider content-position="left">收藏</van-divider>
-    <van-grid :gutter="10">
-      <van-grid-item
-        v-for="value in favoriteList"
-        :key="value.id"
-        icon="photo-o"
-        :text="value.name"
-        @click="jumpToSingle(value.id)"
-      />
-    </van-grid>
     <!-- <van-collapse v-model="activeNames">
       <van-collapse-item title="全部收藏" value="展开" name="1" icon="shop-o">所有内容</van-collapse-item>
     </van-collapse>-->
@@ -17,6 +7,17 @@
     <van-grid :gutter="10">
       <van-grid-item
         v-for="value in myList"
+        :key="value._id"
+        :text="value.name"
+        @click="jumpToSingle(value._id)"
+      >
+        <van-image :src="$imgServer+value.avatarfilePath" />
+      </van-grid-item>
+    </van-grid>
+    <van-divider content-position="left">我的收藏</van-divider>
+    <van-grid :gutter="10">
+      <van-grid-item
+        v-for="value in favoriteList"
         :key="value._id"
         :text="value.name"
         @click="jumpToSingle(value._id)"
@@ -58,6 +59,15 @@ export default {
           .then(res => {
             console.log(res);
             this.myList = res.data.data;
+          })
+          .catch(err => {
+            this.$toast("获取数据错误" + err);
+          });
+        this.$axios
+          .get("/person/getlikings/" + id)
+          .then(res => {
+            console.log(res);
+            this.favoriteList = res.data.data;
           })
           .catch(err => {
             this.$toast("获取数据错误" + err);

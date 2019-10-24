@@ -78,7 +78,7 @@ export default {
         { name: "添加文章", option: "article" },
         { name: "增加照片", option: "photo" },
         { name: "编辑资料", option: "edit" },
-        { name: "反馈", option: "call" }
+        { name: "收藏", option: "like" }
       ]
     };
   },
@@ -89,9 +89,12 @@ export default {
     }
   },
   computed: {
-    // userid() {
-    //   return this.$route.params.id;
-    // }
+    userid() {
+      return this.$store.state.userid;
+    },
+    username() {
+      return this.$store.state.username;
+    }
   },
   created() {
     this.fetchSinglePerson(this.id);
@@ -134,11 +137,15 @@ export default {
     },
     getArticlesList(id) {},
     showPic() {
-      this.show = true;
+      if (this.images.length) {
+        this.show = true;
+      } else {
+        this.$toast.fail("尚无照片，请上传");
+      }
     },
     onChange(index) {
       this.index = index;
-      this.imageInfo = this.ImageList[index].info;
+      if (this.ImageList[index]) this.imageInfo = this.ImageList[index].info;
     },
     onClickLeft() {
       // this.$toast("返回");
@@ -156,7 +163,20 @@ export default {
       } else if (item.option == "photo") {
         this.$router.push("/imageAdd/" + this.id);
       } else if (item.option == "edit") {
-      } else if (item.option == "call") {
+      } else if (item.option == "like") {
+        let data = {
+          _id: this.id,
+          userid: this.userid,
+          username: this.username
+        };
+        this.$axios
+          .post("/person/liked", data)
+          .then(res => {
+            console.log(res);
+          })
+          .catch(err => {
+            this.$toast("获取数据错误" + err);
+          });
       }
     }
   }

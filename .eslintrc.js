@@ -1,17 +1,17 @@
 module.exports = {
-  //   root: true,
-  //   parser: 'babel-eslint',
-  //   parserOptions: {
-  //     //设置"script"（默认）或"module"如果你的代码是在ECMAScript中的模块。
-  //     sourceType: 'module'
-  //   },
-  //   env: {
-  //     browser: true
-  //   },
+  root: true,
+  parser: 'babel-eslint',
+  parserOptions: {
+    //设置"script"（默认）或"module"如果你的代码是在ECMAScript中的模块。
+    sourceType: 'module'
+  },
+  env: {
+    browser: true
+  },
   //   // https://github.com/feross/standard/blob/master/RULES.md#javascript-standard-style
-  //   extends: 'standard',
-  //   // required to lint *.vue files
-  //   plugins: ['html'],
+  // extends: 'standard',
+  // required to lint *.vue files
+  plugins: [],
   // add your custom rules here
   rules: {
     // allow paren-less arrow functions
@@ -21,7 +21,7 @@ module.exports = {
     // allow debugger during development
 
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
-    'no-console': process.env.NODE_ENV === 'production' ? 'on' : 'off'
+    'no-console': process.env.NODE_ENV === 'production' ? 1 : 0
     //   "no-unused-vars": [2, {
     //     // 允许声明未使用变量
     //     "vars": "local",

@@ -21,10 +21,13 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    login_saveToken(state, data) {
-      state.token = data
-      window.localStorage.setItem('token', data)
+    login_saveToken(state, token) {
+      let userinfo = setUserIdAndNameFormToken(token)
+      state.userid = userinfo.userid
+      state.username = userinfo.username
+      state.token = 'Bearer ' + token
 
+      window.localStorage.setItem('token', state.token)
       function parseJwt(token) {
         var base64Url = token.split('.')[1]
         var base64 = decodeURIComponent(
@@ -38,11 +41,16 @@ export default new Vuex.Store({
 
         return JSON.parse(base64)
       }
-      var dd = parseJwt(data.split(' ')[1])
-      // console.log(dd);
-      state.userid = dd.userid
-      state.username = dd.username
+      function setUserIdAndNameFormToken(token) {
+        let payloadInfo = parseJwt(token)
+        let result = {
+          userid: payloadInfo.userid,
+          username: payloadInfo.username
+        }
+        return result
+      }
     },
+
     logout_delToken(state) {
       state.token = ''
       window.localStorage.removeItem('token')

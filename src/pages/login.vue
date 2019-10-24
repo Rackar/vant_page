@@ -8,6 +8,9 @@
     </van-cell-group>
     <van-button @click="onSubmit">登录</van-button>
     <van-button @click="$router.push('/signup')" style="margin-left:20px;">注册</van-button>
+    <van-overlay :show="loading" style="z-index:3;" class-name="myover">
+      <van-loading type="spinner" color="#1989fa" vertical style="margin-top:100px;">加载中...</van-loading>
+    </van-overlay>
   </div>
 </template>
 
@@ -34,20 +37,16 @@ export default {
   },
   methods: {
     onSubmit(formName) {
-      console.log("submit!");
-
-      // this.$emit("refreshID", this.form.user_name);
+      this.loading = true;
       this.$axios
         .post("/user/login", {
           mobile: this.form.mobile,
           pwd: this.form.password
         })
         .then(res => {
-          // console.log(res);
-          // debugger;
           if (res.data.status == 1) {
             this.loading = false;
-            // this.$emit("refreshID", this.form.user_name);
+
             console.log(res.data);
 
             this.$toast({
@@ -55,16 +54,16 @@ export default {
               type: "success",
               message: res.data && res.data.msg
             });
-            var token = "Bearer " + res.data.data.token;
 
-            // this.$store.state.token = token;
+            let token = res.data.data.token;
+
             this.$store.commit("login_saveToken", token);
 
-            //   console.log(this.$route.query);
-            //   let previousUrl = "/";
-            //   if (this.$route.query && this.$route.query.redirect)
-            //     previousUrl = this.$route.query.redirect;
-            //   this.$router.push(previousUrl);
+            console.log(this.$route.query);
+            let previousUrl = "/";
+            if (this.$route.query && this.$route.query.redirect)
+              previousUrl = this.$route.query.redirect;
+            this.$router.push(previousUrl);
           } else {
             this.loading = false;
             this.$toast({
@@ -87,3 +86,9 @@ export default {
   }
 };
 </script>
+<style >
+.myover {
+  z-index: 3 !important;
+  background-color: rgba(128, 128, 128, 0.3);
+}
+</style>
