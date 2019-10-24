@@ -89,6 +89,9 @@ export default {
         .post("/api/person/photos", data)
         .then(res => {
           console.log(res);
+          this.$toast("保存成功");
+
+          this.$router.back();
         })
         .catch(err => console.log(err));
     }

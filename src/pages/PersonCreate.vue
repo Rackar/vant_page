@@ -10,11 +10,11 @@
         placeholder="请输入姓名"
         @click-right-icon="$toast('question')"
       />
-      <van-field v-model="birthday" center clearable label="出生年月" placeholder="输入格式：1950-05">
-        <van-button slot="button" @click="openPickDay('birth')" size="small" type="primary">日期选择</van-button>
+      <van-field v-model="birthday" center clearable label="出生年月" placeholder="输入格式：1950.05">
+        <van-button slot="button" @click="openPickDay('birth')" size="small" type="primary">年月选择</van-button>
       </van-field>
-      <van-field v-model="deathday" center clearable label="去世年月" placeholder="健在请留空">
-        <van-button slot="button" @click="openPickDay('death')" size="small" type="primary">日期选择</van-button>
+      <van-field v-model="deathday" center clearable label="去世年月" placeholder="健在留空或2000.05">
+        <van-button slot="button" @click="openPickDay('death')" size="small" type="primary">年月选择</van-button>
       </van-field>
 
       <van-field v-model="info" label="生平" type="textarea" placeholder="请输入" rows="5" autosize />
@@ -62,7 +62,7 @@ export default {
       deathday: "",
       avatarfilePath: "",
 
-      minDate: new Date(1900, 1, 1),
+      minDate: new Date(1000, 1, 1),
       maxDate: new Date(2025, 10, 1),
       name: "",
       currentDate: new Date(),
@@ -117,9 +117,12 @@ export default {
     },
     pickedBirthday(value) {
       console.log(value);
-      var today = value;
-      today.setHours(today.getHours() + 8);
-      today = today.toISOString().substring(0, 7);
+      var year = value.getFullYear();
+      let month = value.getMonth();
+      let today = year + "." + month;
+      // var today = value;
+      // today.setHours(today.getHours() + 8);
+      // today = today.toISOString().substring(0, 7);
       console.log(today);
       this.show = false;
       if (this.opendPickDay == "birth") this.birthday = today;

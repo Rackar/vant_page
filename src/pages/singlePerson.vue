@@ -15,10 +15,11 @@
     </div>
     <div></div>
     <h3>{{userinfo.name}}</h3>
-    <div class="year">{{userinfo.birthday}} -- {{userinfo.deathday}}</div>
+    <div class="year">( {{userinfo.birthday}} - {{userinfo.deathday}} )</div>
     <div class="info">{{userinfo.info}}</div>
 
     <div>
+      <van-divider content-position="center">文章</van-divider>
       <span v-show="articles.length==0" @click="onSelect({option:'article'})">尚未添加文章</span>
       <van-cell
         v-for="item in articles"
@@ -195,10 +196,13 @@ export default {
   height: 100px;
   color: #3b3b3b;
   text-align: left;
+  overflow: scroll;
 }
 .single .year {
-  font-size: 12px;
+  font-size: 13px;
   color: grey;
+  margin-top: -10px;
+  margin-bottom: 10px;
 }
 .swipeImg {
   width: 30px;
