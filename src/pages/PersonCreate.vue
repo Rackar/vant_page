@@ -10,10 +10,24 @@
         placeholder="请输入姓名"
         @click-right-icon="$toast('question')"
       />
-      <van-field v-model="birthday" center clearable label="出生年月" placeholder="输入格式：1950.05">
+      <van-field
+        v-model="birthday"
+        center
+        clearable
+        label="出生年月"
+        @blur="yearRule(birthday)"
+        placeholder="输入格式：1950.05"
+      >
         <van-button slot="button" @click="openPickDay('birth')" size="small" type="primary">年月选择</van-button>
       </van-field>
-      <van-field v-model="deathday" center clearable label="去世年月" placeholder="健在留空或2000.05">
+      <van-field
+        v-model="deathday"
+        center
+        clearable
+        label="去世年月"
+        @blur="yearRule(deathday)"
+        placeholder="健在留空或2000.05"
+      >
         <van-button slot="button" @click="openPickDay('death')" size="small" type="primary">年月选择</van-button>
       </van-field>
 
@@ -116,14 +130,12 @@ export default {
       this.show = false;
     },
     pickedBirthday(value) {
-      console.log(value);
       var year = value.getFullYear();
-      let month = value.getMonth();
-      let today = year + "." + month;
+      let month = value.getMonth() + 1;
+      let today = year + "." + (Array(2).join(0) + month).slice(-2);
       // var today = value;
       // today.setHours(today.getHours() + 8);
       // today = today.toISOString().substring(0, 7);
-      console.log(today);
       this.show = false;
       if (this.opendPickDay == "birth") this.birthday = today;
       else if (this.opendPickDay == "death") this.deathday = today;
@@ -139,6 +151,10 @@ export default {
     },
 
     savePerson() {
+      if (this.name == "") {
+        this.$toast.fail("姓名不能为空");
+        return;
+      }
       let person = {
         name: this.name,
         birthday: this.birthday,
@@ -155,6 +171,11 @@ export default {
           this.$toast.fail("保存出现问题，请重试");
         }
       });
+    },
+    yearRule(day) {
+      if (day.indexOf(".") == -1 || day.length > 7 || day.length < 4) {
+        this.$toast("年月格式不符，点击右侧按钮选择年月");
+      }
     }
   }
 };

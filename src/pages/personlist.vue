@@ -1,8 +1,5 @@
 <template>
   <div>
-    <!-- <van-collapse v-model="activeNames">
-      <van-collapse-item title="全部收藏" value="展开" name="1" icon="shop-o">所有内容</van-collapse-item>
-    </van-collapse>-->
     <van-divider content-position="left">我创建的</van-divider>
     <van-grid :gutter="10">
       <van-grid-item
@@ -12,6 +9,7 @@
         @click="jumpToSingle(value._id)"
       >
         <van-image :src="value&&value.avatarfilePath?$imgServer+value.avatarfilePath:''" />
+        <div>{{value.name}}</div>
       </van-grid-item>
     </van-grid>
     <van-divider content-position="left">我的收藏</van-divider>
@@ -23,6 +21,7 @@
         @click="jumpToSingle(value._id)"
       >
         <van-image :src="value&&value.avatarfilePath?$imgServer+value.avatarfilePath:''" />
+        <div>{{value.name}}</div>
       </van-grid-item>
     </van-grid>
   </div>

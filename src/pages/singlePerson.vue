@@ -4,8 +4,8 @@
       title="人物"
       left-text="返回"
       left-arrow
-      @click-left="$router.back()"
-      right-text="操作"
+      @click-left="onClickLeft()"
+      :right-text="rightText"
       @click-right="onClickRight()"
     />
 
@@ -13,7 +13,7 @@
     <div>
       <van-image round width="10rem" height="10rem" :src="avatarUrl" v-show="avatarUrl" />
     </div>
-    <div></div>
+    <div class="bg"></div>
     <h3>{{userinfo.name}}</h3>
     <div class="year">( {{userinfo.birthday}} - {{userinfo.deathday}} )</div>
     <div class="info">{{userinfo.info}}</div>
@@ -80,12 +80,14 @@ export default {
           info: "0"
         }
       ],
+      rightText: "操作",
       actionShow: false,
       actions: [
         { name: "添加文章", option: "article" },
         { name: "增加照片", option: "photo" },
         { name: "编辑资料", option: "edit" },
-        { name: "收藏", option: "like" }
+        { name: "收藏", option: "like" },
+        { name: "分享", option: "share" }
       ]
     };
   },
@@ -101,12 +103,20 @@ export default {
     },
     username() {
       return this.$store.state.username;
+    },
+    token() {
+      return this.$store.state.token;
     }
   },
   created() {
     this.fetchSinglePerson(this.id);
 
     this.getArticlesList(this.id);
+    if (!this.token) {
+      this.rightText = "";
+    } else {
+      this.rightText = "操作";
+    }
   },
   methods: {
     cb() {
@@ -121,7 +131,7 @@ export default {
       };
       id = this.id;
       this.$axios
-        .get("/api/person/" + id)
+        .get("/noauth/person/" + id)
         .then(res => {
           console.log(res);
           this.$store.commit("setCurrentPerson", res.data.data);
@@ -155,7 +165,7 @@ export default {
     },
     onClickLeft() {
       // this.$toast("返回");
-      this.$router.back();
+      this.$router.push("/list");
     },
     onClickRight() {
       this.actionShow = true;
@@ -170,6 +180,8 @@ export default {
         this.$router.push("/imageAdd/" + this.id);
       } else if (item.option == "edit") {
         this.$router.push("/personEdit/" + this.id);
+      } else if (item.option == "share") {
+        this.copyPath();
       } else if (item.option == "like") {
         let data = {
           _id: this.id,
@@ -185,12 +197,45 @@ export default {
             this.$toast("获取数据错误" + err);
           });
       }
+    },
+    copyPath() {
+      let copyStr =
+        location.href +
+        ` #点击打开为${this.userinfo.name}做的纪念。你可以注册一下，也能共同添加文章和照片。`;
+      // debugger;
+      const oInput = document.createElement("input");
+      // oInput.style.display = "none";
+      // 把文字放进input中，供复制
+      oInput.value = copyStr;
+      document.body.appendChild(oInput);
+      // 选中创建的input
+      oInput.select();
+      // 执行复制方法， 该方法返回bool类型的结果，告诉我们是否复制成功
+      const copyResult = document.execCommand("copy");
+      // 操作中完成后 从Dom中删除创建的input
+      document.body.removeChild(oInput);
+      if (copyResult) {
+        this.$toast("地址已复制到剪贴板，可直接粘贴给好友");
+      }
     }
   }
 };
 </script>
 
 <style >
+.bg {
+  position: absolute;
+  width: 100%;
+  height: 60%;
+  top: 46px;
+  left: 0;
+  z-index: -1;
+  background-image: url("/img/bg4.jpg");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  /* background-position-y: 100%; */
+  filter: blur(1px);
+}
 .single div.info {
   margin: 5px 25px;
   height: 100px;

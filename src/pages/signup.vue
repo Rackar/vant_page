@@ -78,7 +78,7 @@ export default {
         .then(res => {
           console.log(res);
           // debugger;
-          if (res.data.status == 1 && res.data.msg) {
+          if (res.status == 200) {
             //   this.totalstars -= stars;
             this.$toast({
               duration: 1500,
@@ -87,7 +87,7 @@ export default {
             });
             this.$router.push("/login");
           } else {
-            this.$toast.fail(res.data.msg);
+            this.$toast.fail("手机号已注册");
           }
         })
         .catch(err => {
@@ -95,7 +95,7 @@ export default {
           this.$toast({
             duration: 1500,
             type: "fail",
-            message: "服务器错误 " + err.message
+            message: "手机号已注册"
           });
         });
     }

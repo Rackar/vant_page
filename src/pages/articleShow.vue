@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="article">
     <navBarTop title="文章" />
     <h3>{{article.title}}</h3>
     <div class="text">
@@ -43,8 +43,15 @@ export default {
 </script>
 
 <style  scoped>
+.article {
+  background-image: url("/img/paper.jpg");
+  background-size: 100%;
+  background-repeat: repeat-y;
+}
 .text {
-  width: 100%;
+  padding: 12px 40px 0 40px;
+  line-height: 23px;
+  width: 80%;
   overflow: auto;
   white-space: pre-wrap;
 }
