@@ -40,7 +40,6 @@ export default {
     onClickLeft(cb) {
       cb();
       let f = cb;
-      console.log(f.toString());
       if (f.toString() == "function _default() {}") {
         this.$router.back();
       }

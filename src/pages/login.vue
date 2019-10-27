@@ -59,8 +59,7 @@ export default {
 
             this.$store.commit("login_saveToken", token);
 
-            console.log(this.$route.query);
-            let previousUrl = "/";
+            let previousUrl = "/home";
             if (this.$route.query && this.$route.query.redirect)
               previousUrl = this.$route.query.redirect;
             this.$router.push(previousUrl);

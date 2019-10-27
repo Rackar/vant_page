@@ -113,7 +113,6 @@ export default {
       this.$toast("成功了");
     },
     fetchSinglePerson(id = 0) {
-      console.log(id);
       this.userinfo = {
         name: "",
         birthday: 2018,
