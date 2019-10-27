@@ -74,7 +74,7 @@ export default {
         pwd: this.form.password
       };
       this.$axios
-        .post("/user/signup", form)
+        .post("/noauth/signup", form)
         .then(res => {
           console.log(res);
           // debugger;

@@ -22,6 +22,7 @@ axios.interceptors.request.use(
     config.headers = {
       'Content-Type': ' application/json'
     }
+    console.log(store.state.token)
     if (store.state.token) {
       config.headers.Authorization = `${store.state.token}`
     }

@@ -39,7 +39,7 @@ export default {
     onSubmit(formName) {
       this.loading = true;
       this.$axios
-        .post("/user/login", {
+        .post("/noauth/login", {
           mobile: this.form.mobile,
           pwd: this.form.password
         })

@@ -102,7 +102,7 @@ export default {
         .post("/noauth/upload/image", data, config)
         .then(res => {
           console.log(res);
-          // this.avatarfilePath = res.data.data.filename;
+          this.avatarfilePath = res.data.data.filename;
         })
         .catch(err => console.log(err));
     },
@@ -147,7 +147,7 @@ export default {
         avatarfilePath: this.avatarfilePath,
         createrId: this.$store.state.userid
       };
-      this.$axios.get("/noauth/article").then(res => {
+      this.$axios.post("/api/person",person).then(res => {
         console.log(res);
         // if (res.status == 200 && res.data.status == 1) {
         //   this.$router.back();

@@ -22,11 +22,11 @@ export default new Vuex.Store({
   },
   mutations: {
     login_saveToken(state, token) {
-      let userinfo = setUserIdAndNameFormToken(token)
+      let userinfo = setUserIdAndNameFormToken(token.split(' ')[1])
       state.userid = userinfo.userid
       state.username = userinfo.username
       // state.token = 'Bearer ' + token
-      state.token = token
+      state.token =  token
       window.localStorage.setItem('token', state.token)
       function parseJwt(token) {
         var base64Url = token.split('.')[1]
