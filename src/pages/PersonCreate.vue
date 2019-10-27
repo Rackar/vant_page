@@ -99,10 +99,10 @@ export default {
         }
       };
       this.$axios
-        .post("/api/uploadimage", data, config)
+        .post("/noauth/upload/image", data, config)
         .then(res => {
           console.log(res);
-          this.avatarfilePath = res.data.data.filename;
+          // this.avatarfilePath = res.data.data.filename;
         })
         .catch(err => console.log(err));
     },
@@ -147,14 +147,22 @@ export default {
         avatarfilePath: this.avatarfilePath,
         createrId: this.$store.state.userid
       };
-      this.$axios.post("/api/person", person).then(res => {
+      this.$axios.get("/noauth/article").then(res => {
         console.log(res);
-        if (res.status == 200 && res.data.status == 1) {
-          this.$router.back();
-        } else {
-          this.$toast.fail("保存出现问题，请重试");
-        }
+        // if (res.status == 200 && res.data.status == 1) {
+        //   this.$router.back();
+        // } else {
+        //   this.$toast.fail("保存出现问题，请重试");
+        // }
       });
+      // this.$axios.post("/api/person", person).then(res => {
+      //   console.log(res);
+      //   if (res.status == 200 && res.data.status == 1) {
+      //     this.$router.back();
+      //   } else {
+      //     this.$toast.fail("保存出现问题，请重试");
+      //   }
+      // });
     }
   }
 };
