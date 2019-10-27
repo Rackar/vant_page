@@ -32,7 +32,7 @@ export default new Router({
     {
       name: 'my',
       path: '/my',
-      meta: { requiresAuth: true },
+      meta: {requiresAuth: true},
       component: () => import(/* webpackChunkName: "my" */ '../pages/my.vue')
     },
     {
@@ -56,18 +56,29 @@ export default new Router({
     {
       name: 'personCreate',
       path: '/personCreate',
-      meta: { requiresAuth: true },
+      meta: {requiresAuth: true},
       component: () =>
         import(
           /* webpackChunkName: "personCreate" */
           '../pages/PersonCreate.vue'
         )
     },
-
+    {
+      name: 'personEdit',
+      path: '/personEdit/:id',
+      meta: {requiresAuth: true},
+      props: true,
+      component: () =>
+        import(
+          /* webpackChunkName: "personEdit" */
+          '../pages/PersonEdit.vue'
+        )
+    },
     {
       name: 'article',
       path: '/article/:id',
       props: true,
+
       component: () =>
         import(
           /* webpackChunkName: "articleShow" */
@@ -78,7 +89,7 @@ export default new Router({
       name: 'articleCreate',
       path: '/articleCreate/:id',
       props: true,
-      meta: { requiresAuth: true },
+      meta: {requiresAuth: true},
       component: () =>
         import(
           /* webpackChunkName: "articleCreate" */
@@ -89,7 +100,7 @@ export default new Router({
       name: 'imageAdd',
       path: '/imageAdd/:id',
       props: true,
-      meta: { requiresAuth: true },
+      meta: {requiresAuth: true},
       component: () =>
         import(
           /* webpackChunkName: "imageAdd" */

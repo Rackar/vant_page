@@ -48,10 +48,6 @@ export default {
       this.$router.push(`/single/${id}`);
     },
     fetchInitData() {
-      for (let index = 0; index < 1; index++) {
-        this.favoriteList.push(singleStuc);
-        this.historyList.push(singleStuc);
-      }
       let id = this.$store.state.userid;
       if (id) {
         this.$axios

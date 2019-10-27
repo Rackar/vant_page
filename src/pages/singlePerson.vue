@@ -169,6 +169,7 @@ export default {
       } else if (item.option == "photo") {
         this.$router.push("/imageAdd/" + this.id);
       } else if (item.option == "edit") {
+        this.$router.push("/personEdit/" + this.id);
       } else if (item.option == "like") {
         let data = {
           _id: this.id,

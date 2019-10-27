@@ -38,6 +38,7 @@
         :max-count="1"
         :before-read="beforeRead"
         :after-read="avatar_upload"
+        @delete="delImg"
       />
     </div>
     <div>
@@ -69,9 +70,38 @@ export default {
       show: false
     };
   },
+  props: {
+    id: {
+      type: String,
+      default: "0"
+    }
+  },
   created() {
     if (!this.$store.state.token) {
       this.$router.push("/login");
+    } else {
+      this.$axios
+        .get("/api/person/" + this.id)
+        .then(res => {
+          console.log(res);
+          this.$store.commit("setCurrentPerson", res.data.data);
+          let userinfo = res.data.data;
+          this.name = userinfo.name;
+          this.birthday = userinfo.birthday;
+          this.deathday = userinfo.deathday;
+          this.info = userinfo.info;
+          this.fileList.push({
+            url: this.$imgServer + userinfo.avatarfilePath
+          });
+          this.avatarfilePath = userinfo.avatarfilePath;
+          // this.articles = this.userinfo.articles;
+          // this.avatarUrl = this.$imgServer + res.data.data.avatarfilePath;
+          // this.imagesRawData = this.userinfo.photos;
+          // this.getImagesList();
+        })
+        .catch(err => {
+          this.$toast("获取数据错误" + err);
+        });
     }
   },
   methods: {
@@ -140,6 +170,7 @@ export default {
 
     savePerson() {
       let person = {
+        _id: this.id,
         name: this.name,
         birthday: this.birthday,
         deathday: this.deathday,
@@ -147,7 +178,7 @@ export default {
         avatarfilePath: this.avatarfilePath,
         createrId: this.$store.state.userid
       };
-      this.$axios.post("/api/person", person).then(res => {
+      this.$axios.put("/api/person", person).then(res => {
         console.log(res);
         if (res.status == 200 && res.data.status == 1) {
           this.$router.back();
@@ -155,6 +186,17 @@ export default {
           this.$toast.fail("保存出现问题，请重试");
         }
       });
+      // this.$axios.post("/api/person", person).then(res => {
+      //   console.log(res);
+      //   if (res.status == 200 && res.data.status == 1) {
+      //     this.$router.back();
+      //   } else {
+      //     this.$toast.fail("保存出现问题，请重试");
+      //   }
+      // });
+    },
+    delImg(file, detail) {
+      this.avatarfilePath = "";
     }
   }
 };
