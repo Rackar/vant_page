@@ -70,7 +70,7 @@ export default {
         }
       };
       this.$axios
-        .post("/api/uploadimage", data, config)
+        .post("/noauth/upload/image", data, config)
         .then(res => {
           let imageFilePath = res.data.data.filename;
           this.uploadedImgs.push({
