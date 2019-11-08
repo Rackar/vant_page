@@ -183,11 +183,11 @@ export default {
       console.log(this.doneWords);
     },
     checkPayment() {
-      var showNode = [30, 90];
+      var showNode = [100, 200];
       if (!this.isPayed) {
         if (
           showNode.some(v => v == this.finishCount) ||
-          this.finishCount % 30 == 0
+          this.finishCount % 100 == 0
         ) {
           this.showPay = true;
           this.time_ad_show = new Date();
