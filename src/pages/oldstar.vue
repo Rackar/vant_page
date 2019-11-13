@@ -1,24 +1,12 @@
 <template>
   <div class="content">
     <div>科学育儿=耐心+规则+鼓励</div>
-    <!-- <van-menu class="van-menu-demo" mode="horizontal" @select="handleSelect">
-      <van-menu-item index="1">登录/注册</van-menu-item>
-
-      <van-menu-item index="2">我要兑换</van-menu-item>
-      <van-menu-item index="3">设置</van-menu-item>
-    </van-menu>-->
-    <!-- <van-dialog :visible.sync="loginDialogVisible" width="350px" :before-close="handleCloseLogin">
-      <div>孩子完成约定任务后加星，累积星星可兑换奖励。微信收藏本页方便记录。</div>
-      <van-tabs v-model="activeName" type="card">
-        <van-tab-pane label="登录" name="login">
-          <login @refreshID="refreshID" />
-        </van-tab-pane>
-        <van-tab-pane label="注册" name="signup">
-          <signup @refreshID="refreshID" />
-        </van-tab-pane>
-      </van-tabs>
-    </van-dialog>-->
-    <van-dialog :visible.sync="settingDialogVisible" width="350px">
+    <van-popup
+      class="card"
+      v-model="settingDialogVisible"
+      position="bottom"
+      :style="{ height: '80%' }"
+    >
       设置预留项，自定义奖励等级和图片，即将开启
       <div>
         <h3>最近变更记录：</h3>
@@ -36,13 +24,9 @@
           <td>{{ list.stars > 0 ? "+" + list.stars : list.stars }}</td>
         </tr>
       </table>
-    </van-dialog>
-    <!-- <van-button @click="(loginDialogVisible = true), (loginORsignup = true)"
-      >登录/注册</van-button
-    >-->
+    </van-popup>
     <div>
       <div style="font-size:22px;line-height:40px;color:#909399;margin-top:20px;">今天是 {{ today }}</div>
-      <!-- <br /> -->
       <div class="main" shadow="hover">
         <div>你好，{{ name }}小朋友</div>
         <div>
@@ -50,9 +34,6 @@
           <span class="stars">{{ totalstars }}</span> 颗星星！
         </div>
       </div>
-
-      <!-- <van-button @click="dialogVisible = true">我要兑换</van-button> -->
-
       <div class="main" shadow="hover">
         <div>
           今日奖励星星：
@@ -65,53 +46,62 @@
         </div>
       </div>
     </div>
-
-    <van-dialog title="我要兑换" :visible.sync="dialogVisible" width="90%" :before-close="handleClose">
-      <h3>选择要兑换的礼物等级：</h3>
+    <van-button type="primary" @click="dialogVisible=true">兑换</van-button>
+    <van-button type="primary" @click="settingDialogVisible=true">设置</van-button>
+    <van-popup
+      closeable
+      v-model="dialogVisible"
+      position="bottom"
+      :style="{ height: '60%' }"
+      :close="handleClose"
+    >
+      <!-- <van-dialog title="我要兑换" :visible.sync="dialogVisible" width="90%" :before-close="handleClose"> -->
+      <h4>选择要兑换的礼物等级：</h4>
 
       <div>
         <van-row>
           <van-col :span="7" :offset="1">
-            <van-card :body-style="{ padding: '0px' }" shadow="hover">
-              <div @click="clickPresent(0)" :class="{ selected: selectedIndex == 1 }">
-                <div>￥1-149</div>
-                <img src="./pic/60.jpg" class="image" />
-                <div style="padding: 0px;">
-                  <span>{{ presentList[0] }} 颗星</span>
-                </div>
+            <!-- <van-card :body-style="{ padding: '0px' }" shadow="hover"> -->
+            <div @click="clickPresent(0)" class="card" :class="{ selected: selectedIndex == 1 }">
+              <div>￥1-149</div>
+              <img src="./pic/60.jpg" class="image" />
+              <div style="padding: 0px;">
+                <span>{{ presentList[0] }} 颗星</span>
               </div>
-            </van-card>
+            </div>
+            <!-- </van-card> -->
           </van-col>
           <van-col :span="7" :offset="1">
-            <van-card :body-style="{ padding: '0px' }" shadow="hover">
-              <div @click="clickPresent(1)" :class="{ selected: selectedIndex == 2 }">
-                <div>￥150-299</div>
-                <img src="./pic/120.jpg" class="image" />
-                <div style="padding: 0px;">
-                  <span>{{ presentList[1] }} 颗星</span>
-                </div>
+            <!-- <van-card :body-style="{ padding: '0px' }" shadow="hover"> -->
+            <div @click="clickPresent(1)" class="card" :class="{ selected: selectedIndex == 2 }">
+              <div>￥150-299</div>
+              <img src="./pic/120.jpg" class="image" />
+              <div style="padding: 0px;">
+                <span>{{ presentList[1] }} 颗星</span>
               </div>
-            </van-card>
+            </div>
+            <!-- </van-card> -->
           </van-col>
           <van-col :span="7" :offset="1">
-            <van-card :body-style="{ padding: '0px' }" shadow="hover">
-              <div @click="clickPresent(2)" :class="{ selected: selectedIndex == 3 }">
-                <div>￥300-500</div>
-                <img src="./pic/200.jpg" class="image" />
-                <div style="padding: 0px;">
-                  <span>{{ presentList[2] }} 颗星</span>
-                </div>
+            <!-- <van-card :body-style="{ padding: '0px' }" shadow="hover"> -->
+            <div @click="clickPresent(2)" class="card" :class="{ selected: selectedIndex == 3 }">
+              <div>￥300-500</div>
+              <img src="./pic/200.jpg" class="image" />
+              <div style="padding: 0px;">
+                <span>{{ presentList[2] }} 颗星</span>
               </div>
-            </van-card>
+            </div>
+            <!-- </van-card> -->
           </van-col>
         </van-row>
         <van-row>
           <div style="margin-top:35px;">
-            <van-button type="primary" round @click="useStars">确 定</van-button>
+            <van-button type="primary" @click="useStars">确 定</van-button>
           </div>
         </van-row>
       </div>
-    </van-dialog>
+      <!-- </van-dialog> -->
+    </van-popup>
   </div>
 </template>
 
@@ -143,8 +133,7 @@ export default {
     this.today =
       d.getFullYear() + "年" + (d.getMonth() + 1) + "月" + d.getDate() + "日";
     this.initSelect();
-    this.checkLogin();
-    // this.getdata();
+    this.refreshID();
   },
 
   methods: {
@@ -153,20 +142,9 @@ export default {
       // console.log(data.format("yyyy"));
       return data.toLocaleString();
     },
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
-      if (key == 1) {
-        this.loginDialogVisible = true;
-        this.loginORsignup = true;
-      } else if (key == 2) {
-        this.dialogVisible = true;
-      } else if (key == 3) {
-        this.settingDialogVisible = true;
-      }
-    },
-    refreshID(user_name) {
+
+    refreshID() {
       //拉取本id的星星数
-      this.user_name = user_name;
       // fetch("http://localhost:3012/stars/" + user_name, {
       this.$axios
         .post("api/stars/total", {})
@@ -176,89 +154,38 @@ export default {
 
         .then(res => {
           console.log(res);
-          res = res.data;
+          let data = res.data.data;
           this.loginDialogVisible = false;
-          this.totalstars = res.stars - 0 || 0;
-          this.name = res.real_name;
-
-          localStorage.setItem("user_name", user_name);
-          //   this.totalstars -= stars;
-          // this.$emit("refreshID", this.user_name);
-          // this.$toast({
-          //   type: "success",
-          //   message: "注册成功"
-          // });
-          // fetch("http://localhost:3012/stars/list/" + user_name, {
-          //   this.$axios("stars/list/" + user_name, {
-          //     method: "GET"
-          //   })
-          //     // .then(response => {
-          //     //   return response.json();
-          //     // })
-          //     .then(res => {
-          //       this.starsHistory = res.data;
-          //     });
+          this.totalstars = data.stars.stars - 0 || 0;
+          this.name = data.real_name;
+          this.starsHistory = data.history;
         })
         .catch(err => {
-          localStorage.removeItem("user_name");
           this.loginDialogVisible = true;
           this.loginORsignup = true;
           console.log(err);
         });
     },
-    handleCloseLogin(done) {
-      if (this.checkLogin()) done();
-    },
+
     initSelect() {
       this.wantUse = 0;
       this.selectedIndex = 0;
       this.dialogVisible = false;
     },
-    checkLogin() {
-      //   if (localStorage.length > 0) {
-      //     var user_name = localStorage.getItem("user_name");
-      //     if (user_name != null) {
-      //       if (this.name == "") this.refreshID(user_name);
-      //       return true;
-      //     } else {
-      //       //重新登录
-      //       this.loginDialogVisible = true;
-      //       this.loginORsignup = true;
-      //       return false;
-      //     }
-      //   } else {
-      //     this.loginDialogVisible = true;
-      //     return false;
-      //   }
-    },
+
     updateStars(stars) {
       this.$axios
-        .post("stars/add", {
+        .post("api/stars/add", {
           stars: 0 - stars,
           user_name: this.user_name
         })
-        // fetch("http://localhost:3012/stars/add", {
-        //   method: "POST",
-        //   mode: "cors",
-        //   body: JSON.stringify({
-        //     stars: 0 - stars,
-        //     user_name: this.user_name
-        //   }),
-        //   // fetch("http://123.206.94.184:3012/postdata", {
-        //   //   method: "POST",
-        //   //   mode: "cors",
-        //   //   body: JSON.stringify({ data: 0 - stars }),
-        //   headers: {
-        //     "content-type": "application/json"
-        //   }
-        // })
         .then(res => {
           console.log(res, this.totalstars);
           if (res.statusText == "OK") {
-            this.refreshID(this.user_name);
+            this.refreshID();
           } else {
             this.$toast({
-              type: "error",
+              type: "fail",
               message: "添加失败，请报告管理员"
             });
           }
@@ -267,15 +194,12 @@ export default {
     useStars() {
       if (this.wantUse != 0) {
         if (this.wantUse <= this.totalstars) {
-          this.$confirm(
-            "要花费" + this.wantUse + "颗星星兑换本级礼物？",
-            "确定兑换",
-            {
-              confirmButtonText: "确定",
-              cancelButtonText: "取消",
-              type: "warning"
-            }
-          )
+          this.$dialog
+            .confirm({
+              title: "兑换",
+              message: "要花费" + this.wantUse + "颗星星兑换本级礼物？"
+            })
+
             .then(() => {
               this.$toast({
                 type: "success",
@@ -319,45 +243,22 @@ export default {
       } else {
       }
     },
-    // getdata() {
-    //   // fetch("http://123.206.94.184:3012/getall", {
-    //   this.$axios("/getall", {
-    //     method: "GET",
-    //     mode: "cors"
-    //   })
-    //     .then(res => {
-    //       // console.log(res)
-    //       return res.json();
-    //     })
-    //     .then(json => {
-    //       console.log("获取的结果", json);
-    //       this.name = json.name;
-    //       this.totalstars = json.total;
-    //       return json;
-    //     });
-    // },
+
     adddata() {
       var clip = new Date() - this.posttime;
       if (clip < 600000) {
-        this.$toast.error("每10分钟只能加星一次哦");
+        this.$toast.fail("每10分钟只能加星一次哦");
       } else {
         if (this.todaystars != 0) {
-          // fetch("http://123.206.94.184:3012/postdata", {
-          //             method: "POST",
-          //             mode: "cors",
-          //             body: JSON.stringify({ data: this.todaystars }),
-
-          // fetch("http://localhost:3012/stars/add", {
           this.$axios
-            .post("stars/add", {
+            .post("api/stars/add", {
               stars: this.todaystars,
               user_name: this.user_name
             })
             .then(res => {
-              // console.log(res, typeof this.totalstars, typeof this.todaystars);
               console.log(res);
               if (res.statusText == "OK") {
-                this.refreshID(this.user_name);
+                this.refreshID();
                 this.$toast({
                   type: "success",
                   message: "又加星了呀!很棒"
@@ -372,7 +273,7 @@ export default {
             });
         } else {
           this.$toast({
-            type: "error",
+            type: "fail",
             message: "未选择星星数量"
           });
         }
@@ -392,7 +293,7 @@ export default {
   /* background-image: url("./pic/bg3.jpg"); */
 }
 .stars {
-  font-size: 30px;
+  font-size: 24px;
   color: blue;
 }
 .selected {
@@ -406,10 +307,7 @@ export default {
 i.van-rate__icon {
   font-size: 36px;
 }
-div.main.van-card {
-  margin: 25px 0;
-  border-radius: 35px;
-  line-height: 46px;
-  background-color: #d8ecff;
+.card {
+  font-size: 18px;
 }
 </style>

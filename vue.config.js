@@ -8,8 +8,8 @@ module.exports = {
   productionSourceMap: false, //去除build版本的map
   devServer: {
     // publicPath: "/", // 和 publicPath 保持一致,
-    port: 9433,
-    proxy: "http://localhost:3006"
+    port: 9433
+    // proxy: "http://localhost:3006"
 
     // proxy: {
     //   '/noauth': {
