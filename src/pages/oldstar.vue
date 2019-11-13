@@ -43,17 +43,17 @@
     <div>
       <div style="font-size:22px;line-height:40px;color:#909399;margin-top:20px;">今天是 {{ today }}</div>
       <!-- <br /> -->
-      <van-card class="main" shadow="hover">
+      <div class="main" shadow="hover">
         <div>你好，{{ name }}小朋友</div>
         <div>
           总计:
           <span class="stars">{{ totalstars }}</span> 颗星星！
         </div>
-      </van-card>
+      </div>
 
       <!-- <van-button @click="dialogVisible = true">我要兑换</van-button> -->
 
-      <van-card class="main" shadow="hover">
+      <div class="main" shadow="hover">
         <div>
           今日奖励星星：
           <span class="stars">{{ todaystars }}</span>
@@ -63,7 +63,7 @@
         <div style="margin-top:24px;">
           <van-button type="primary" round @click="adddata">提交</van-button>
         </div>
-      </van-card>
+      </div>
     </div>
 
     <van-dialog title="我要兑换" :visible.sync="dialogVisible" width="90%" :before-close="handleClose">
@@ -184,7 +184,7 @@ export default {
           localStorage.setItem("user_name", user_name);
           //   this.totalstars -= stars;
           // this.$emit("refreshID", this.user_name);
-          // this.$message({
+          // this.$toast({
           //   type: "success",
           //   message: "注册成功"
           // });
@@ -257,7 +257,7 @@ export default {
           if (res.statusText == "OK") {
             this.refreshID(this.user_name);
           } else {
-            this.$message({
+            this.$toast({
               type: "error",
               message: "添加失败，请报告管理员"
             });
@@ -277,7 +277,7 @@ export default {
             }
           )
             .then(() => {
-              this.$message({
+              this.$toast({
                 type: "success",
                 message: "兑换成功!"
               });
@@ -286,20 +286,20 @@ export default {
               this.initSelect();
             })
             .catch(() => {
-              this.$message({
+              this.$toast({
                 type: "info",
                 message: "已取消兑换"
               });
               this.initSelect();
             });
         } else {
-          this.$message({
-            type: "error",
+          this.$toast({
+            type: "fail",
             message: "星星还不够换哦，继续努力吧"
           });
         }
       } else {
-        this.$message({
+        this.$toast({
           type: "warning",
           message: "尚未选择兑换等级"
         });
@@ -319,27 +319,27 @@ export default {
       } else {
       }
     },
-    getdata() {
-      // fetch("http://123.206.94.184:3012/getall", {
-      this.$axios("/getall", {
-        method: "GET",
-        mode: "cors"
-      })
-        .then(res => {
-          // console.log(res)
-          return res.json();
-        })
-        .then(json => {
-          console.log("获取的结果", json);
-          this.name = json.name;
-          this.totalstars = json.total;
-          return json;
-        });
-    },
+    // getdata() {
+    //   // fetch("http://123.206.94.184:3012/getall", {
+    //   this.$axios("/getall", {
+    //     method: "GET",
+    //     mode: "cors"
+    //   })
+    //     .then(res => {
+    //       // console.log(res)
+    //       return res.json();
+    //     })
+    //     .then(json => {
+    //       console.log("获取的结果", json);
+    //       this.name = json.name;
+    //       this.totalstars = json.total;
+    //       return json;
+    //     });
+    // },
     adddata() {
       var clip = new Date() - this.posttime;
       if (clip < 600000) {
-        this.$message.error("每10分钟只能加星一次哦");
+        this.$toast.error("每10分钟只能加星一次哦");
       } else {
         if (this.todaystars != 0) {
           // fetch("http://123.206.94.184:3012/postdata", {
@@ -352,35 +352,26 @@ export default {
             .post("stars/add", {
               stars: this.todaystars,
               user_name: this.user_name
-              // method: "POST",
-              // mode: "cors",
-              // data: JSON.stringify({
-              //   stars: this.todaystars,
-              //   user_name: this.user_name
-              // }),
-              // headers: {
-              //   "content-type": "application/json"
-              // }
             })
             .then(res => {
               // console.log(res, typeof this.totalstars, typeof this.todaystars);
               console.log(res);
               if (res.statusText == "OK") {
                 this.refreshID(this.user_name);
-                this.$message({
+                this.$toast({
                   type: "success",
                   message: "又加星了呀!很棒"
                 });
                 this.posttime = new Date();
               } else {
-                this.$message({
-                  type: "error",
+                this.$toast({
+                  type: "fail",
                   message: "添加失败，请报告管理员"
                 });
               }
             });
         } else {
-          this.$message({
+          this.$toast({
             type: "error",
             message: "未选择星星数量"
           });

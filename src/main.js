@@ -1,62 +1,62 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './utils/router'
-import store from './utils/store'
+import Vue from "vue";
+import App from "./App.vue";
+import router from "./utils/router";
+import store from "./utils/store";
 
-import Vant from 'vant'
-import 'vant/lib/index.css'
-import {Lazyload} from 'vant'
+import Vant from "vant";
+import "vant/lib/index.css";
+import { Lazyload } from "vant";
 let lazyOption = {
-  loading: '/img/loading.jpg',
-  error: '/img/loading.jpg'
-}
-Vue.use(Vant)
+  loading: "/img/loading.jpg",
+  error: "/img/loading.jpg"
+};
+Vue.use(Vant);
 // Vue.use(Lazyload, lazyOption);
-Vue.use(Lazyload)
-import axios from 'axios'
-axios.defaults.baseURL = 'http://localhost:3000/'
+Vue.use(Lazyload);
+import axios from "axios";
+axios.defaults.baseURL = "http://localhost:3006/";
 // var token = window.localStorage.getItem("token");
 //请求拦截。所有http请求增加token
 axios.interceptors.request.use(
   config => {
     config.headers = {
-      'Content-Type': ' application/json'
-    }
+      "Content-Type": " application/json"
+    };
     if (store.state.token) {
-      config.headers.Authorization = `${store.state.token}`
+      config.headers.Authorization = `${store.state.token}`;
     }
     // config.headers[] = localStorage.token;
-    return config
+    return config;
   },
   err => {
-    return Promise.reject(err)
+    return Promise.reject(err);
   }
-)
+);
 axios.interceptors.response.use(
   function(response) {
     // 用户信息是否超时，重定向到登录页面
     // debugger;
     if (response.status != 200) {
-      localStorage.clear()
+      localStorage.clear();
       router.replace({
-        path: '/login',
+        path: "/login",
         query: {
           redirect: router.currentRoute.fullPath
         }
-      })
-      Vant.Toast('请登录后操作')
+      });
+      Vant.Toast("请登录后操作");
     }
-    return response
+    return response;
   },
   function(error) {
     // Do something with response error
-    return Promise.reject(error)
+    return Promise.reject(error);
   }
-)
+);
 
-Vue.prototype.$axios = axios
-Vue.prototype.$imgServer = 'http://localhost:3000/'
-Vue.config.productionTip = false
+Vue.prototype.$axios = axios;
+Vue.prototype.$imgServer = "http://localhost:3006/";
+Vue.config.productionTip = false;
 
 router.beforeResolve((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
@@ -64,18 +64,18 @@ router.beforeResolve((to, from, next) => {
     // if not, redirect to login page.
     if (!store.state.token) {
       next({
-        name: 'login'
-      })
+        name: "login"
+      });
     } else {
-      next()
+      next();
     }
   } else {
-    next() // 确保一定要调用 next()
+    next(); // 确保一定要调用 next()
   }
-})
+});
 
 new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount('#app')
+}).$mount("#app");
