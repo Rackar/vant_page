@@ -6,11 +6,11 @@
       <router-view />
     </div>
 
-    <van-tabbar v-model="active" class="dilan">
+    <!-- <van-tabbar v-model="active" class="dilan">
       <van-tabbar-item name="star" icon="home-o" replace to="/star">首页</van-tabbar-item>
       <van-tabbar-item name="list" icon="search" replace to="/list">兑换</van-tabbar-item>
       <van-tabbar-item name="my" icon="friends-o" replace to="/my">我的</van-tabbar-item>
-    </van-tabbar>
+    </van-tabbar>-->
   </div>
 </template>
 
