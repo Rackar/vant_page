@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <div>科学育儿=耐心+规则+鼓励</div>
+    <div class="title">科学育儿=耐心+规则+鼓励</div>
     <van-popup
       class="card"
       v-model="settingDialogVisible"
@@ -10,6 +10,7 @@
       设置预留项，自定义奖励等级和图片，即将开启
       <div>
         <h3>最近变更记录：</h3>
+       手动变更数量 <van-stepper v-model="stepNum" /> <van-button type="primary" round @click="updateStars(stepNum)">变更星星</van-button>
       </div>
 
       <table>
@@ -125,7 +126,8 @@ export default {
       presentList: [60, 120, 200],
       selectedIndex: 0,
       posttime: 0,
-      starsHistory: []
+      starsHistory: [],
+      stepNum:0,
     };
   },
   mounted() {
@@ -288,6 +290,9 @@ export default {
 </script>
 
 <style>
+.title{
+  padding: 40px 0 30px 0 ;
+}
 .content {
   font-size: 28px;
   /* background-image: url("./pic/bg3.jpg"); */
