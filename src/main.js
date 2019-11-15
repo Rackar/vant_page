@@ -1,6 +1,8 @@
 import Vue from "vue";
 import App from "./App.vue";
 
+import store from "./utils/store";
+import router from "./utils/router";
 import Vant from "vant";
 import "vant/lib/index.css";
 import { Lazyload } from "vant";
@@ -73,5 +75,7 @@ router.beforeResolve((to, from, next) => {
 });
 
 new Vue({
+  store,
+  router,
   render: h => h(App)
 }).$mount("#app");

@@ -1,7 +1,8 @@
 <template>
   <div>
+    <h1>识字测试</h1>
     <div class="word-wraper">
-      <span class="word">{{word}}</span>
+      <span class="word">{{ word }}</span>
       <span class="tianzige zs"></span>
       <span class="tianzige zx"></span>
       <span class="tianzige ys"></span>
@@ -14,21 +15,62 @@
         style="margin-right:30px;"
         size="normal"
         @click="nextWord(true)"
-      >认&nbsp;&nbsp;&nbsp;&nbsp;识</van-button>
-      <van-button type="danger" size="normal" @click="nextWord(false)">不认识</van-button>
+        >认&nbsp;&nbsp;&nbsp;&nbsp;识</van-button
+      >
+      <van-button type="danger" size="normal" @click="nextWord(false)"
+        >不认识</van-button
+      >
     </div>
-    <div>已认识 ： {{rightCount}}个字， 不认识： {{wrongCount}}个字</div>
-    <div>当前认识率 ： {{rightRate}}</div>
-    <div>当前进度 ： 第{{finishCount+1 <= words.length?finishCount+1:finishCount}}字 / 总{{words.length}}字</div>
+    <div>已认识 ： {{ rightCount }}个字， 不认识： {{ wrongCount }}个字</div>
+    <div>当前认识率 ： {{ rightRate }}</div>
+    <div>
+      当前进度 ： 第{{
+        finishCount + 1 <= words.length ? finishCount + 1 : finishCount
+      }}字 / 总{{ words.length }}字
+    </div>
     <!-- {{test}} ,{{is_weixin()}} -->
     <div>
-      <van-button type="warning" size="small" style="margin-right:20px;" @click="backWord()">返回</van-button>
-      <van-button type="warning" size="small" style="margin-right:20px;" @click="clear()">清空</van-button>
-      <van-button type="warning" size="small" style="margin-right:20px;" @click="showDIY=true">自定</van-button>
-      <van-button type="warning" size="small" @click="showOption=!showOption" v-show="false">选项</van-button>
+      <van-button
+        type="warning"
+        size="small"
+        style="margin-right:20px;"
+        @click="backWord()"
+        >返回</van-button
+      >
+      <van-button
+        type="warning"
+        size="small"
+        style="margin-right:20px;"
+        @click="clear()"
+        >清空</van-button
+      >
+      <van-button
+        type="warning"
+        size="small"
+        style="margin-right:20px;"
+        @click="showDIY = true"
+        >自定</van-button
+      >
+      <van-button
+        type="warning"
+        size="small"
+        @click="showOption = !showOption"
+        v-show="false"
+        >选项</van-button
+      >
       <div v-show="showOption">
-        <van-field v-model="skipNum" label="跳过前多少字" placeholder="请输入数字">
-          <van-button slot="button" size="small" type="primary" @click="jump(skipNum)">跳过</van-button>
+        <van-field
+          v-model="skipNum"
+          label="跳过前多少字"
+          placeholder="请输入数字"
+        >
+          <van-button
+            slot="button"
+            size="small"
+            type="primary"
+            @click="jump(skipNum)"
+            >跳过</van-button
+          >
         </van-field>
         <van-button @click="save()">保存当前进度</van-button>
         <div>显示已完成数据</div>
@@ -44,7 +86,13 @@
     >
       <div>连续输入，无需空格或标点</div>
       <van-field v-model="wordsInputDIY" placeholder="请输入自定义汉字集合" />
-      <van-button type="warning" size="small" style="margin-right:20px;" @click="useDIYwords()">确定更改</van-button>
+      <van-button
+        type="warning"
+        size="small"
+        style="margin-right:20px;"
+        @click="useDIYwords()"
+        >确定更改</van-button
+      >
     </van-popup>
 
     <div v-show="showPay" class="payment">
@@ -54,7 +102,9 @@
       </div>
 
       <div style="margin-top:160px;">
-        <van-button type="danger" size="normal" @click="quitPay()">继续测试</van-button>
+        <van-button type="danger" size="normal" @click="quitPay()"
+          >继续测试</van-button
+        >
       </div>
       <!-- <div style="margin-top:20px;">
         <van-button type="default" size="small" @click="isPayed=true">赞赏完成</van-button>
