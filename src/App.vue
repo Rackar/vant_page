@@ -1,16 +1,20 @@
 <template>
   <div id="app">
-    <word word />
+    <mainPage />
   </div>
 </template>
 
 <script>
-import word from "./pages/word.vue";
+import mainPage from "./components/main.vue";
 
 export default {
   name: "app",
   components: {
-    word
+    mainPage
+  },
+  created() {
+    var token = window.localStorage.token;
+    if (token) this.$store.commit("login_saveToken", token);
   }
 };
 </script>
@@ -30,8 +34,12 @@ h1 {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 10px;
 
-  /* padding-top: 30px; */
+  /* background-color: #159957;
+  background-image: linear-gradient(120deg, #155799, #159957); */
+}
+body {
+  margin: 0 auto;
+  width: 100%;
 }
 </style>
