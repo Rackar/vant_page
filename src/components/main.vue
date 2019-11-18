@@ -13,8 +13,8 @@
       <van-tabbar-item name="word" icon="search" replace to="/word"
         >识字</van-tabbar-item
       >
-      <van-tabbar-item name="my" icon="friends-o" replace to="/my"
-        >我的</van-tabbar-item
+      <van-tabbar-item name="calc" icon="friends-o" replace to="/calc"
+        >计算</van-tabbar-item
       >
     </van-tabbar>
   </div>

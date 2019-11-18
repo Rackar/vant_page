@@ -30,7 +30,7 @@ export default new Router({
       meta: { requiresAuth: true },
       component: () =>
         import(
-          /* webpackChunkName: "personCreate" */
+          /* webpackChunkName: "star" */
           "../pages/star.vue"
         )
     },
@@ -38,7 +38,13 @@ export default new Router({
       name: "word",
       path: "/word",
       component: () =>
-        import(/* webpackChunkName: "login" */ "../pages/word.vue")
+        import(/* webpackChunkName: "word" */ "../pages/word.vue")
+    },
+    {
+      name: "calc",
+      path: "/calc",
+      component: () =>
+        import(/* webpackChunkName: "calc" */ "../pages/calc.vue")
     }
   ]
 });
