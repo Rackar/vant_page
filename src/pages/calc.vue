@@ -1,18 +1,19 @@
 <template>
   <div class="calc">
-    <h2>航摄参数计算</h2>
+    <h1>航摄参数计算</h1>
 
-    <div class="copy">杨旭</div>
     <van-cell-group>
-      航摄仪： 选择 飞机选择
+      <!-- <van-button square type="primary">增加飞机</van-button>
+      <van-button round type="info">编辑航摄仪</van-button> -->
       <van-field
         readonly
         clickable
-        label="航摄仪"
+        label-width="150"
+        label="选择航摄仪"
         :value="cam.name"
         placeholder="选择航摄仪"
         @click="showCamPicker = true"
-      />
+      ></van-field>
 
       <van-popup v-model="showCamPicker" position="top">
         <van-picker
@@ -25,11 +26,12 @@
       <van-field
         readonly
         clickable
-        label="飞机"
+        label-width="150"
+        label="选择飞机"
         :value="plane.name"
         placeholder="选择飞机"
         @click="showPlanePicker = true"
-      />
+      ></van-field>
 
       <van-popup v-model="showPlanePicker" position="top">
         <van-picker
@@ -42,125 +44,78 @@
     </van-cell-group>
     <van-cell-group>
       <van-field
-        label-width="200"
+        label-width="150"
         label="地面分辨率（米）"
         v-model="form.fenbianlv"/>
       <van-field
-        label-width="200"
+        label-width="150"
         v-model="form.pxchongdie"
         label="旁向重叠度（%）"
       >
       </van-field>
       <van-field
-        label-width="200"
+        label-width="150"
         label="航向重叠度（%）"
         v-model="form.hxchongdie"
       >
       </van-field>
       <van-field
-        label-width="200"
+        label-width="150"
         label="测区长度（公里）"
         v-model="form.changdu"
       >
       </van-field>
       <van-field
-        label-width="200"
+        label-width="150"
         label="测区宽度（公里）"
         v-model="form.kuandu"
       >
       </van-field>
       <van-field
-        label-width="200"
+        label-width="150"
         label="单架次航时（时）"
         v-model="form.dancixiaoshi"
       >
       </van-field
     ></van-cell-group>
     <div class="result">
-      <van-col :span="24">
-        <van-tag>相对航高</van-tag>
-        {{ XDhanggao }}米
-      </van-col>
-      <van-col :span="12">
-        <van-tag>基线长度</van-tag>
-        {{ jixian }}米
-      </van-col>
-      <van-col :span="12">
-        <van-tag>航线间隔</van-tag>
-        {{ jiange }}米
-      </van-col>
-      <van-col :span="12">
-        <van-tag>航片数量</van-tag>
-        {{ hangpian }}片
-      </van-col>
-      <van-col :span="12">
-        <van-tag>航线数量</van-tag>
-        {{ hangxian }}条
-      </van-col>
-      <van-col :span="12">
-        <van-tag>作业航程</van-tag>
-        {{ hangcheng }}公里
-      </van-col>
-      <van-col :span="12">
-        <van-tag>作业小时</van-tag>
-        {{ xiaoshi }}小时
-      </van-col>
+      <van-row type="flex">
+        <van-col :span="10" offset="2">
+          <van-tag mark type="primary">相对航高</van-tag>
+          {{ XDhanggao }}米
+        </van-col> </van-row
+      ><van-row type="flex">
+        <van-col :span="10" offset="2">
+          <van-tag mark type="primary">基线长度</van-tag>
+          {{ jixian }}米
+        </van-col>
+        <van-col :span="10" offset="1">
+          <van-tag mark type="primary">航线间隔</van-tag>
+          {{ jiange }}米
+        </van-col> </van-row
+      ><van-row type="flex">
+        <van-col :span="10" offset="2">
+          <van-tag mark type="primary">航片数量</van-tag>
+          {{ hangpian }}片
+        </van-col>
+        <van-col :span="10" offset="1">
+          <van-tag mark type="primary">航线数量</van-tag>
+          {{ hangxian }}条
+        </van-col> </van-row
+      ><van-row type="flex">
+        <van-col :span="10" offset="2">
+          <van-tag mark type="primary">作业航程</van-tag>
+          {{ hangcheng }}公里
+        </van-col>
+        <van-col :span="10" offset="1">
+          <van-tag mark type="primary">作业小时</van-tag>
+          {{ xiaoshi }}小时
+        </van-col></van-row
+      >
     </div>
-    <!-- <van-row :gutter="10">
-      <van-col :xs="0" :sm="3" :md="6" :lg="8" :xl="8">
-        <div class="grid-content bg-purple">&nbsp;</div>
-      </van-col>
-      <van-col :xs="24" :sm="18" :md="12" :lg="8" :xl="8">
-        <van-cell-group> -->
-    <!-- <van-field label="航摄仪选择">
-            <van-select
-              v-model="form.cam"
-              label="请选择航摄仪"
-              @change="setCam"
-            >
-              <van-option
-                v-for="cam in cams"
-                :label="cam.name"
-                :value="cam.name"
-                :key="cam.id"
-              ></van-option>
-            </van-select>
-          </van-field>
-          <van-field label="飞机选择">
-            <van-select
-              v-model="form.plane"
-              label="请选择飞机"
-              @change="setPlane"
-            >
-              <van-option
-                v-for="plane in planes"
-                :label="plane.name"
-                :value="plane.name"
-                :key="plane.id"
-              ></van-option>
-            </van-select>
-          </van-field> -->
-    <!-- <van-field label="地面分辨率（米）" v-model="form.fenbianlv">
-          </van-field>
-          <van-field v-model="form.pxchongdie" label="旁向重叠度（%）">
-          </van-field>
-          <van-field label="航向重叠度（%）" v-model="form.hxchongdie">
-          </van-field>
-          <van-field label="测区长度（公里）" v-model="form.changdu">
-          </van-field>
-          <van-field label="测区宽度（公里）" v-model="form.kuandu">
-          </van-field>
-          <van-field label="单架次航时（时）" v-model="form.dancixiaoshi">
-          </van-field>
-          <van-divider></van-divider>
-
-          
-        </van-cell-group>
-      </van-col>
-      <van-col :xs="0" :sm="3" :md="6" :lg="8" :xl="8">
-        <div class="grid-content bg-purple">&nbsp;</div>
-      </van-col>
-    </van-row> -->
+    <div class="contain">
+      <canvas id="myCanvas" width="300" height="400" ref="myCanvas"></canvas>
+    </div>
   </div>
 </template>
 
@@ -334,7 +289,8 @@ export default {
       cam: {},
       plane: {},
       showCamPicker: false,
-      showPlanePicker: false
+      showPlanePicker: false,
+      canvasObj: null
     };
   },
 
@@ -357,6 +313,120 @@ export default {
       //   console.log(selectPlane[0]);
       this.plane = selectPlane[0];
       this.showPlanePicker = false;
+    },
+    changeCanvas() {
+      if (this.hangxian && this.form.changdu && this.form.kuandu) {
+        let myCanvas = this.$refs.myCanvas;
+        //画布的宽高
+        let Cwidth = 300;
+        let CHeight = 300;
+        // 创建一个画布上绘图的环境
+        var ctx = myCanvas.getContext("2d");
+        ctx.clearRect(0, 0, Cwidth, CHeight);
+        ctx.beginPath();
+        let chang = this.form.changdu;
+        let kuan = this.form.kuandu;
+        let max = chang > kuan ? chang : kuan;
+        let hangxian = this.hangxian;
+
+        ctx.fillStyle = "rgba(0, 0, 230, 0.2)";
+        ctx.fillRect(
+          20,
+          20,
+
+          (chang / max) * CHeight - 40,
+          (kuan / max) * Cwidth - 40
+        );
+        let offset = 20 - 30;
+        for (let index = 0; index <= hangxian; index++) {
+          ctx.moveTo(0, 20 - 30 + (((kuan / max) * Cwidth) / hangxian) * index); //设置起点状态
+          ctx.lineTo(
+            (chang / max) * CHeight,
+            20 - 30 + (((kuan / max) * Cwidth) / hangxian) * index
+          ); //设置末端状态
+          ctx.lineWidth = 1; //设置线宽状态
+          ctx.strokeStyle = "#222"; //设置线的颜色状态
+          ctx.stroke(); //进行绘制
+        }
+
+        // 一般情况下，canvas的背景颜色是透明的，当生成图片的时候也是透明
+        // 如果希望图片有个背景颜色，可以创建一个框高100%的矩形
+        // 画布的最底端-这样就可以有个背景颜色
+        // ctx.fillStyle = "#fff";
+        // ctx.fillRect(0, 0, Cwidth, CHeight);
+
+        // //设置颜色也可以适用rgba
+        // ctx.fillStyle = "rgba(0,0,0,0.9)";
+        // //绘制一个矩形的边框(x, y, width, height)
+        // ctx.strokeRect(50, 100, 100, 100);
+
+        // // 可以在页面插入文字
+        // ctx.fillStyle = "#333";
+
+        // // 三个参数-文字，横坐标-纵坐标
+        // ctx.font = "16px Arial";
+        // ctx.fillText("今天是个好日子", 50, 50);
+
+        // ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+        // ctx.fillRect(200, 30, 80, 50);
+
+        // 还可以插入图片
+        // 首先创建一个图片标签
+        // 等待图片加载完之后在渲染画布中
+        // let imgObj = new Image()
+        // imgObj.src = 'http://img4.imgtn.bdimg.com/it/u=3704809141,1787261659&fm=11&gp=0.jpg'
+        // let imgUrl = await this.imgOnload(imgObj)
+        // ctx.drawImage(imgUrl, 250, 200, 150, 150)
+
+        // 这里图片的我注释了，，因为跨域的图片链接，在生成图片时会失败，你可以使用本地图片
+        // 基本步骤就这样
+
+        // 生成图片（图片的格式）
+        // let imageUrl = myCanvas.toDataURL("image/png", 0.5);
+
+        // base64图片地址就获取到了
+        // 现实中存在两种情况，一个显示页面中，点击下载，这个就简单了，可以利用a标签进行下载
+        //还有一种情况就是，图片base64地址生成后，自动下载
+        // this.downloadFile(imageUrl, "1.png");
+        // 加载图片-二维码-条形码
+        // function imgOnload(img) {
+        //   return new Promise(resolve => {
+        //     img.onload = function() {
+        //       resolve(this);
+        //     };
+        //   });
+        // }
+        // // 创建下载图片事件
+        // function downloadFile(data, filename) {
+        //   //创建一个具有指定的命名空间URI和限定名称的元素
+        //   var save_link = document.createElementNS(
+        //     "http://www.w3.org/1999/xhtml",
+        //     "a"
+        //   );
+        //   save_link.href = data;
+        //   save_link.download = filename;
+        //   // 绑定下载事件
+        //   var event = document.createEvent("MouseEvents");
+        //   event.initMouseEvent(
+        //     "click",
+        //     true,
+        //     false,
+        //     window,
+        //     0,
+        //     0,
+        //     0,
+        //     0,
+        //     0,
+        //     false,
+        //     false,
+        //     false,
+        //     false,
+        //     0,
+        //     null
+        //   );
+        //   save_link.dispatchEvent(event);
+        // }
+      }
     }
   },
   //   zxiangduihanggao = fenbianlv.value * jiaoju.value /xiangyuandaxiao.value *1000;
@@ -372,6 +442,18 @@ export default {
     this.cam = this.cams[0];
     this.plane = this.planes[0];
   },
+  updated() {
+    // ;
+    if (
+      this.hangxian &&
+      this.form.changdu &&
+      this.form.kuandu &&
+      this.form.fenbianlv
+    ) {
+      this.changeCanvas();
+    }
+  },
+
   computed: {
     camNames() {
       return this.cams.map(cam => cam.name);
@@ -381,18 +463,31 @@ export default {
     },
     XDhanggao() {
       return Math.round(
-        ((this.form.fenbianlv * this.cam.jiaoju) / this.cam.xiangyuan) * 1000
+        (((this.form.fenbianlv == 0 || this.form.fenbianlv == "0."
+          ? 0.1
+          : this.form.fenbianlv - 0) *
+          this.cam.jiaoju) /
+          this.cam.xiangyuan) *
+          1000
       );
     },
     jixian() {
       return (
-        (this.form.fenbianlv * this.cam.hxpx * (100 - this.form.hxchongdie)) /
+        ((this.form.fenbianlv == 0 || this.form.fenbianlv == "0."
+          ? 0.1
+          : this.form.fenbianlv - 0) *
+          this.cam.hxpx *
+          (100 - this.form.hxchongdie)) /
         100
-      );
+      ).toFixed(2);
     },
     jiange() {
       return Math.round(
-        (this.form.fenbianlv * this.cam.pxpx * (100 - this.form.pxchongdie)) /
+        ((this.form.fenbianlv == 0 || this.form.fenbianlv == "0."
+          ? 0.1
+          : this.form.fenbianlv - 0) *
+          this.cam.pxpx *
+          (100 - this.form.pxchongdie)) /
           100
       );
     },
@@ -417,4 +512,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.van-field__control {
+  color: #3636e6;
+}
+.result {
+  text-align: left;
+}
+</style>

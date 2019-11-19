@@ -28,7 +28,7 @@ client.scp(
     if (err) {
       console.log(err);
     } else {
-      console.log("blog update success");
+      console.log("tools update success");
     }
   }
 );
