@@ -34,8 +34,21 @@ export default {
   },
   data() {
     return {
-      active: "home"
+      active: "word"
     };
+  },
+  // mounted() {
+  //   console.log(this.$router, this.$route);
+  // },
+  computed: {
+    activeName() {
+      return this.$route.name;
+    }
+  },
+  watch: {
+    activeName(newValue, oldValue) {
+      this.active = newValue;
+    }
   }
 };
 </script>
