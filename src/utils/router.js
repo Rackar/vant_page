@@ -8,7 +8,7 @@ export default new Router({
   routes: [
     {
       path: "/",
-      redirect: "/word"
+      redirect: "/card"
       // name: "login",
       // component: () => import("./jianshu/login.vue")
     },
@@ -33,6 +33,15 @@ export default new Router({
         import(
           /* webpackChunkName: "star" */
           "../pages/star.vue"
+        )
+    },
+    {
+      name: "card",
+      path: "/card",
+      component: () =>
+        import(
+          /* webpackChunkName: "card" */
+          "../pages/card.vue"
         )
     },
     {
