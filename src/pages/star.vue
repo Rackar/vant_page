@@ -260,7 +260,7 @@ export default {
             })
             .then(res => {
               console.log(res);
-              if (res.statusText == "OK") {
+              if (res.status == 200) {
                 this.refreshID();
                 this.$toast({
                   type: "success",

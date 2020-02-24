@@ -16,7 +16,7 @@ Vue.use(Lazyload);
 import axios from "axios";
 let mainUrl =
   process.env.NODE_ENV === "production"
-    ? "http://49.232.137.34:3006/"
+    ? "https://tools.codingyang.com/api/"
     : "http://localhost:3006/";
 axios.defaults.baseURL = mainUrl;
 // var token = window.localStorage.getItem("token");
