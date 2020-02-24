@@ -184,7 +184,7 @@ export default {
         })
         .then(res => {
           console.log(res, this.totalstars);
-          if (res.statusText == "OK") {
+          if (res.status == 200) {
             this.refreshID();
           } else {
             this.$toast({
