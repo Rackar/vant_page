@@ -37,22 +37,23 @@ axios.interceptors.request.use(
   }
 );
 axios.interceptors.response.use(
-  function(response) {
+  function (response) {
+    console.log(response);
     // 用户信息是否超时，重定向到登录页面
     // debugger;
-    if (response.status != 200) {
-      localStorage.clear();
-      router.replace({
-        path: "/login",
-        query: {
-          redirect: router.currentRoute.fullPath
-        }
-      });
-      Vant.Toast("请登录后操作");
-    }
+    // if (response.status != 200) {
+    //   localStorage.clear();
+    //   router.replace({
+    //     path: "/login",
+    //     query: {
+    //       redirect: router.currentRoute.fullPath
+    //     }
+    //   });
+    //   Vant.Toast("请登录后操作");
+    // }
     return response;
   },
-  function(error) {
+  function (error) {
     // Do something with response error
     return Promise.reject(error);
   }

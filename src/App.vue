@@ -11,10 +11,6 @@ export default {
   name: "app",
   components: {
     mainPage
-  },
-  created() {
-    var token = window.localStorage.token;
-    if (token) this.$store.commit("login_saveToken", token);
   }
 };
 </script>

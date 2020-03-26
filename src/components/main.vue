@@ -7,15 +7,10 @@
     </div>
 
     <van-tabbar v-model="active" class="dilan">
-      <van-tabbar-item name="star" icon="home-o" replace to="/star"
-        >星星</van-tabbar-item
-      >
-      <van-tabbar-item name="word" icon="search" replace to="/word"
-        >识字</van-tabbar-item
-      >
-      <van-tabbar-item name="calc" icon="friends-o" replace to="/calc"
-        >计算</van-tabbar-item
-      >
+      <van-tabbar-item name="star" icon="home-o" replace to="/star">星星</van-tabbar-item>
+      <van-tabbar-item name="word" icon="search" replace to="/word">识字</van-tabbar-item>
+      <van-tabbar-item name="calc" icon="friends-o" replace to="/calc">计算</van-tabbar-item>
+      <van-tabbar-item name="up" icon="friends-o" replace to="/up">链接</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
