@@ -28,22 +28,26 @@ export default {
       let url = this.email.split(/\n/).filter(ele => ele !== "" && ele !== " ");
       let pass = this.pass;
       let gzlist = "ilianyue";
-      let push = await this.$axios.post("http://123.206.94.184:5000/add", {
-        url,
-        pass,
-        gzlist
-      });
-      console.log(push.data);
+      let push = await this.$axios.post(
+        "api/lianyue",
+        {
+          url,
+          pass,
+          gzlist
+        }
+      );
+      console.log();
+      let data=push.data
 
-      if (push.data == "ok") {
+      if (data.status === 1) {
         this.$toast({
           type: "success",
-          message: "添加链接成功!"
+          message: data.msg
         });
       } else {
         this.$toast({
           type: "fail",
-          message: "添加链接失败!"
+          message: data.msg
         });
       }
     }
