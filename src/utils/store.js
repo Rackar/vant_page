@@ -21,25 +21,23 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    login_saveToken(state, token) {
-      let userinfo = setUserIdAndNameFormToken(token.split(' ')[1])
+    login_saveToken(state, tokenWithB) {
+      console.log('保存token');
+      let token = tokenWithB.split(" ")[1]
+        ? tokenWithB.split(" ")[1]
+        : tokenWithB;
+      let userinfo = setUserIdAndNameFormToken(token);
       state.userid = userinfo.userid
       state.username = userinfo.username
-      // state.token = 'Bearer ' + token
-      state.token =  token
-      window.localStorage.setItem('token', state.token)
+      state.token = token
+      window.localStorage.setItem('token', token)
       function parseJwt(token) {
-        var base64Url = token.split('.')[1]
-        var base64 = decodeURIComponent(
-          atob(base64Url)
-            .split('')
-            .map(function(c) {
-              return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
-            })
-            .join('')
+        let secPart = token.split(".")[1];
+        let userString = decodeURIComponent(
+          escape(window.atob(secPart.replace(/-/g, "+").replace(/_/g, "/")))
         )
 
-        return JSON.parse(base64)
+        return JSON.parse(userString)
       }
       function setUserIdAndNameFormToken(token) {
         let payloadInfo = parseJwt(token)

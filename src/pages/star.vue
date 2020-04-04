@@ -131,10 +131,7 @@ export default {
       stepNum: 0
     };
   },
-  created() {
-    var token = window.localStorage.token;
-    if (token) this.$store.commit("login_saveToken", token);
-  },
+  created() {},
   mounted() {
     var d = new Date();
     this.today =

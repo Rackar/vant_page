@@ -27,7 +27,7 @@ axios.interceptors.request.use(
       "Content-Type": " application/json"
     };
     if (store.state.token) {
-      config.headers.Authorization = `${store.state.token}`;
+      config.headers.Authorization = `Bearer ${store.state.token}`;
     }
     // config.headers[] = localStorage.token;
     return config;
@@ -67,6 +67,7 @@ router.beforeResolve((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
+    console.log('路由命中');
     if (!store.state.token) {
       next({
         name: "login"
