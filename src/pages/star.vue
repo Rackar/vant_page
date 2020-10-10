@@ -9,9 +9,12 @@
     >
       设置预留项，自定义奖励等级和图片，即将开启
       <div>
-        <h3>最近变更记录：</h3>手动变更数量
+        <h3>最近变更记录：</h3>
+        手动变更数量
         <van-stepper v-model="stepNum" min="-100" max="100" />
-        <van-button type="primary" round @click="updateStars(stepNum)">变更星星</van-button>
+        <van-button type="primary" round @click="updateStars(stepNum)"
+          >变更星星</van-button
+        >
       </div>
 
       <table>
@@ -28,7 +31,16 @@
       </table>
     </van-popup>
     <div>
-      <div style="font-size:22px;line-height:40px;color:#909399;margin-top:20px;">今天是 {{ today }}</div>
+      <div
+        style="
+          font-size: 22px;
+          line-height: 40px;
+          color: #909399;
+          margin-top: 20px;
+        "
+      >
+        今天是 {{ today }}
+      </div>
       <div class="main" shadow="hover">
         <div>你好，{{ name }}小朋友</div>
         <div>
@@ -43,13 +55,15 @@
         </div>
         <van-rate v-model="todaystars" class="bigrate"></van-rate>
 
-        <div style="margin-top:24px;">
+        <div style="margin-top: 24px">
           <van-button type="primary" round @click="adddata">提交</van-button>
         </div>
       </div>
     </div>
-    <van-button type="primary" @click="dialogVisible=true">兑换</van-button>
-    <van-button type="primary" @click="settingDialogVisible=true">设置</van-button>
+    <van-button type="primary" @click="dialogVisible = true">兑换</van-button>
+    <van-button type="primary" @click="settingDialogVisible = true"
+      >设置</van-button
+    >
     <van-popup
       closeable
       v-model="dialogVisible"
@@ -64,10 +78,14 @@
         <van-row>
           <van-col :span="7" :offset="1">
             <!-- <van-card :body-style="{ padding: '0px' }" shadow="hover"> -->
-            <div @click="clickPresent(0)" class="card" :class="{ selected: selectedIndex == 1 }">
+            <div
+              @click="clickPresent(0)"
+              class="card"
+              :class="{ selected: selectedIndex == 1 }"
+            >
               <div>￥1-149</div>
               <img src="./pic/60.jpg" class="image" />
-              <div style="padding: 0px;">
+              <div style="padding: 0px">
                 <span>{{ presentList[0] }} 颗星</span>
               </div>
             </div>
@@ -75,10 +93,14 @@
           </van-col>
           <van-col :span="7" :offset="1">
             <!-- <van-card :body-style="{ padding: '0px' }" shadow="hover"> -->
-            <div @click="clickPresent(1)" class="card" :class="{ selected: selectedIndex == 2 }">
+            <div
+              @click="clickPresent(1)"
+              class="card"
+              :class="{ selected: selectedIndex == 2 }"
+            >
               <div>￥150-299</div>
               <img src="./pic/120.jpg" class="image" />
-              <div style="padding: 0px;">
+              <div style="padding: 0px">
                 <span>{{ presentList[1] }} 颗星</span>
               </div>
             </div>
@@ -86,10 +108,14 @@
           </van-col>
           <van-col :span="7" :offset="1">
             <!-- <van-card :body-style="{ padding: '0px' }" shadow="hover"> -->
-            <div @click="clickPresent(2)" class="card" :class="{ selected: selectedIndex == 3 }">
+            <div
+              @click="clickPresent(2)"
+              class="card"
+              :class="{ selected: selectedIndex == 3 }"
+            >
               <div>￥300-500</div>
               <img src="./pic/200.jpg" class="image" />
-              <div style="padding: 0px;">
+              <div style="padding: 0px">
                 <span>{{ presentList[2] }} 颗星</span>
               </div>
             </div>
@@ -97,7 +123,7 @@
           </van-col>
         </van-row>
         <van-row>
-          <div style="margin-top:35px;">
+          <div style="margin-top: 35px">
             <van-button type="primary" @click="useStars">确 定</van-button>
           </div>
         </van-row>
@@ -128,7 +154,7 @@ export default {
       selectedIndex: 0,
       posttime: 0,
       starsHistory: [],
-      stepNum: 0
+      stepNum: 0,
     };
   },
   created() {},
@@ -156,7 +182,7 @@ export default {
         //   return response.json();
         // })
 
-        .then(res => {
+        .then((res) => {
           console.log(res);
           let data = res.data.data;
           this.loginDialogVisible = false;
@@ -164,11 +190,16 @@ export default {
           this.name = data.real_name;
           this.starsHistory = data.history;
         })
-        .catch(err => {
+        .catch((err) => {
           this.loginDialogVisible = true;
           this.loginORsignup = true;
           console.log(err);
+          this.tokenFalseAndJump();
         });
+    },
+    tokenFalseAndJump() {
+      this.$store.commit("logout_delToken");
+      this.$router.push("/signup");
     },
 
     initSelect() {
@@ -181,16 +212,16 @@ export default {
       this.$axios
         .post("api/stars/add", {
           stars: stars - 0,
-          user_name: this.user_name
+          user_name: this.user_name,
         })
-        .then(res => {
+        .then((res) => {
           console.log(res, this.totalstars);
           if (res.status == 200) {
             this.refreshID();
           } else {
             this.$toast({
               type: "fail",
-              message: "添加失败，请报告管理员"
+              message: "添加失败，请报告管理员",
             });
           }
         });
@@ -201,13 +232,13 @@ export default {
           this.$dialog
             .confirm({
               title: "兑换",
-              message: "要花费" + this.wantUse + "颗星星兑换本级礼物？"
+              message: "要花费" + this.wantUse + "颗星星兑换本级礼物？",
             })
 
             .then(() => {
               this.$toast({
                 type: "success",
-                message: "兑换成功!"
+                message: "兑换成功!",
               });
               this.updateStars(-1 * this.wantUse);
               this.dialogVisible = false;
@@ -216,20 +247,20 @@ export default {
             .catch(() => {
               this.$toast({
                 type: "info",
-                message: "已取消兑换"
+                message: "已取消兑换",
               });
               this.initSelect();
             });
         } else {
           this.$toast({
             type: "fail",
-            message: "星星还不够换哦，继续努力吧"
+            message: "星星还不够换哦，继续努力吧",
           });
         }
       } else {
         this.$toast({
           type: "warning",
-          message: "尚未选择兑换等级"
+          message: "尚未选择兑换等级",
         });
       }
     },
@@ -257,28 +288,28 @@ export default {
           this.$axios
             .post("api/stars/add", {
               stars: this.todaystars,
-              user_name: this.user_name
+              user_name: this.user_name,
             })
-            .then(res => {
+            .then((res) => {
               console.log(res);
               if (res.status == 200) {
                 this.refreshID();
                 this.$toast({
                   type: "success",
-                  message: "又加星了呀!很棒"
+                  message: "又加星了呀!很棒",
                 });
                 this.posttime = new Date();
               } else {
                 this.$toast({
                   type: "fail",
-                  message: "添加失败，请报告管理员"
+                  message: "添加失败，请报告管理员",
                 });
               }
             });
         } else {
           this.$toast({
             type: "fail",
-            message: "未选择星星数量"
+            message: "未选择星星数量",
           });
         }
       }
@@ -286,8 +317,8 @@ export default {
     handleClose(done) {
       this.initSelect();
       done();
-    }
-  }
+    },
+  },
 };
 </script>
 
